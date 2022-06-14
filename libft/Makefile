@@ -6,7 +6,7 @@
 #    By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/08 14:28:06 by nsamoilo          #+#    #+#              #
-#    Updated: 2022/04/05 16:28:08 by nsamoilo         ###   ########.fr        #
+#    Updated: 2022/06/14 16:10:37 by nsamoilo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,7 @@ FUNCTIONS = ft_putchar ft_putchar_fd ft_putstr ft_putstr_fd ft_putendl \
 			ft_strcmp ft_strncmp ft_strstr ft_strnstr ft_memset ft_memalloc \
 			ft_memdel ft_bzero ft_memcpy ft_memccpy ft_memmove ft_memchr \
 			ft_memcmp ft_strsub ft_strjoin ft_strtrim ft_strsplit \
-			ft_lstnew ft_lstdelone ft_lstdel ft_lstadd ft_lstiter \
-			ft_lstmap ft_lstprint ft_strisx ft_calloc ft_lstaddend ft_strrev get_next_line \
+			ft_strisx ft_calloc ft_strrev get_next_line \
 			ft_itoa_base ft_itoa_without_sign ft_max_int ft_str_toupper ft_abs
 FT_PRINTF_FUNCTIONS = ft_printf parse_flags parse_length parse_precision parse_width \
 			print_specifier print_left_or_right print_cs  \

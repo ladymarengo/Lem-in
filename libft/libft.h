@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 12:02:21 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/04/07 14:57:34 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/14 16:10:12 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,6 @@
 # include <inttypes.h>
 # include <string.h>
 # include "ft_printf_src/ft_printf.h"
-
-typedef struct s_list
-{
-	void			*content;
-	size_t			content_size;
-	struct s_list	*next;
-}					t_list;
 
 void	ft_putchar(char c);
 void	ft_putchar_fd(char c, int fd);
@@ -77,21 +70,14 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s);
 char	**ft_strsplit(char const *s, char c);
-t_list	*ft_lstnew(void const *content, size_t content_size);
-void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
-void	ft_lstdel(t_list **alst, void (*del)(void *, size_t));
-void	ft_lstadd(t_list **alst, t_list *new);
-void	ft_lstiter(t_list *lst, void (*f)(t_list *elem));
-t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-void	ft_lstprint(t_list *lst);
 int		ft_strisx(char *str, int (*f)(int));
 void	*ft_calloc(size_t count, size_t size);
-void	ft_lstaddend(t_list **alst, t_list *new);
 char	*ft_strrev(char const *s);
 char	*ft_itoa_without_sign(intmax_t n);
 char	*ft_itoa_base(uintmax_t ln, unsigned int base);
 void	ft_str_toupper(char	*str);
 int		ft_max_int(int first, int second);
 int		ft_abs(int value);
+int		get_next_line(const int fd, char **line);
 
 #endif

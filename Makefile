@@ -6,7 +6,7 @@
 #    By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 14:17:22 by nsamoilo          #+#    #+#              #
-#    Updated: 2022/06/14 14:27:42 by nsamoilo         ###   ########.fr        #
+#    Updated: 2022/06/14 16:13:59 by nsamoilo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,8 @@ all: $(NAME)
 
 debug: FLAGS += -g
 debug: re
+no_flags: FLAGS = -w -g
+no_flags: re
 
 $(NAME): $(OBJ)
 	@make -C $(LIB_DIR) --silent
