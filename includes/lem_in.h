@@ -6,12 +6,15 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/14 14:30:54 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:11:11 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
+
+
+
 
 # include "../libft/libft.h"
 
