@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_new.c                                :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 11:31:04 by nsamoilo          #+#    #+#             */
-/*   Updated: 2021/12/08 17:50:39 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:13:44 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ int	get_next_line(const int fd, char **line)
 	state = 1;
 	if (BUFF_SIZE <= 0 || fd < 0 || fd > MAX_FD || line == NULL)
 		return (-1);
+	if (*line)
+		free(*line);
 	while (created == 0)
 	{
 		created = create_line(&(saved[fd]), line, state);

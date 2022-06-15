@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/15 14:31:22 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:27:54 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ bool	check_ants(char *line, int *ants)
 {
 	return (true);
 }
+
 bool	handle_commands(t_input_flags *flags, char *line)
 {
 	if (ft_strcmp("##start", line) == 0 && !flags->start && !flags->next_end)
@@ -60,6 +61,7 @@ int	read_input(int fd)
 	t_array			*rooms;
 	t_input_flags	flags;
 
+	line = NULL;
 	rooms = init_struct_array();
 	ft_bzero(&flags, sizeof(flags));
 	if (get_next_line(fd, &line) <= 0 || !check_ants(line, &ants))
@@ -87,6 +89,7 @@ int	read_input(int fd)
 			return (-1);
 	}
 	print_elements(rooms);
+	del_structure_array(rooms);
 	return (0);
 }
 
@@ -102,5 +105,7 @@ int	main(int argc, char **argv)
 		ft_printf("Invalid\n");
 	else
 		ft_printf("Valid\n");
+	if (fd != 0)
+		close(fd);
 	return (0);
 }
