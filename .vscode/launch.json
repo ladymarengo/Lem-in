@@ -8,8 +8,8 @@
 			"type": "lldb",
 			"request": "launch",
 			"name": "Debug",
-			"program": "/Users/nsamoilo/github/Lem-in/lem-in",
-			"args": ["< /maps/example1"],
+			"program": "/Users/jheiskan/Projects/Lem-in/lem-in",
+			"args": ["/Users/jheiskan/Projects/Lem-in/maps/example1"],
 			"cwd": "${workspaceFolder}"
 		}
 	]

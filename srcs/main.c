@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/14 16:17:25 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/15 14:31:22 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+#include <sys/stat.h>
+#include <fcntl.h>
 
 void	put_room_to_list(char *line, bool start, bool end)
 {
@@ -34,52 +36,71 @@ bool	check_ants(char *line, int *ants)
 {
 	return (true);
 }
-
-int	read_input(void)
+bool	handle_commands(t_input_flags *flags, char *line)
 {
-	char	*line;
-	int		ants;
-	bool	start;
-	bool	end;
-	bool	parsing_links;
-
-	start = false;
-	end = false;
-	parsing_links = false;
-	if (get_next_line(0, &line) <= 0 || !check_ants(line, &ants))
-		return (-1);
-	while (get_next_line(0, &line) > 0)
+	if (ft_strcmp("##start", line) == 0 && !flags->start && !flags->next_end)
 	{
-		if (ft_strcmp("##start", line) == 0 && ft_strcmp("##end", line) == 0)
+		flags->start = true;
+		flags->next_start = true;
+	}
+	else if (ft_strcmp("##end", line) == 0 && !flags->end && !flags->next_start)
+	{
+		flags->end = true;
+		flags->next_end = true;
+	}
+	else
+		return (false);
+	return (true);
+}
+
+int	read_input(int fd)
+{
+	char			*line;
+	int				ants;
+	t_array			*rooms;
+	t_input_flags	flags;
+
+	rooms = init_struct_array();
+	ft_bzero(&flags, sizeof(flags));
+	if (get_next_line(fd, &line) <= 0 || !check_ants(line, &ants))
+		return (-1);
+	while (get_next_line(fd, &line) > 0)
+	{
+		if (ft_strcmp("##start", line) == 0 || ft_strcmp("##end", line) == 0)
 		{
-			if (ft_strcmp("##start", line) == 0)
-				start = true;
-			if (ft_strcmp("##end", line) == 0)
-				end = true;
+			if (!handle_commands(&flags, line))
+				return (-1);
 		}
-		else if (!parsing_links && is_room_valid(line))
+		else if (!flags.parsing_links && is_room_valid(line))
 		{
-			put_room_to_list(line, start, end);
-			start = false;
-			end = false;
+			if (!add_element(rooms, line))
+				return (-1);
+			flags.next_start = false;
+			flags.next_end = false;
 		}
 		else if (is_link_valid(line))
 		{
 			put_link_to_list(line);
-			parsing_links = true;
+			flags.parsing_links = true;
 		}
 		else if (line[0] != '#')
 			return (-1);
 	}
+	print_elements(rooms);
 	return (0);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	if (read_input() != 0)
+	int	fd;
+	
+	if (argc != 1)
+		fd = open(argv[1], O_RDONLY);
+	else
+		fd = 0;
+	if (read_input(fd) != 0)
 		ft_printf("Invalid\n");
 	else
 		ft_printf("Valid\n");
-	
 	return (0);
 }
