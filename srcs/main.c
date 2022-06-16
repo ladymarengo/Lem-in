@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/16 15:07:39 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/16 15:37:04 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,29 @@ bool	init_input_structure(t_input *input)
 	return (true);
 }
 
+bool	coords_dups(t_array *rooms)
+{
+	char	**coords;
+	size_t	i;
+
+	i = 0;
+	coords = (char **)malloc(sizeof(char *) * rooms->nb_of_elements);
+	while (i < rooms->nb_of_elements)
+	{
+		coords[i] = ft_strchr(rooms->array[i], ' ') + 1;
+		ft_putendl(coords[i]);
+		i++;
+	}
+	return (false);
+}
+
+bool	check_dups(t_input *input)
+{
+	if (coords_dups(&(input->rooms)))
+		return (false);
+	return (true);
+}
+
 bool	read_input(t_input *input, int fd)
 {
 	if (get_next_line(fd, &(input->line)) <= 0
@@ -45,6 +68,7 @@ bool	read_input(t_input *input, int fd)
 		return (false);
 	if (!check_input(input, fd) || !post_input_check(input))
 		return (false);
+	check_dups(input);
 	return (true);
 }
 
