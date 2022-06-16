@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/16 14:42:24 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/16 15:07:39 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,16 @@ bool	init_input_structure(t_input *input)
 	return (true);
 }
 
+bool	read_input(t_input *input, int fd)
+{
+	if (get_next_line(fd, &(input->line)) <= 0
+		|| !check_ants(input->line, &(input->ants)))
+		return (false);
+	if (!check_input(input, fd) || !post_input_check(input))
+		return (false);
+	return (true);
+}
+
 int	main(int argc, char **argv)
 {
 	int		fd;
@@ -49,7 +59,7 @@ int	main(int argc, char **argv)
 		fd = open(argv[1], O_RDONLY);
 	else
 		fd = 0;
-	if (!read_input(&input, fd) || !check_input(&input))
+	if (!read_input(&input, fd))
 		ft_printf("Invalid\n");
 	else
 		ft_printf("Valid\n");

@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/16 14:43:01 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/16 15:14:04 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ typedef struct s_input_flags
 	bool	parsing_links;
 	bool	start;
 	bool	end;
-	bool	next_start;
-	bool	next_end;
+	bool	next_s;
+	bool	next_e;
 }	t_input_flags;
 
 typedef struct s_input
@@ -65,7 +65,7 @@ bool	init_struct_array(t_array *new);
 bool	add_element(t_array *array, char *element);
 void	print_elements(t_array *array);
 bool	check_ants(char *line, long int *ants);
-bool	read_input(t_input *input, int fd);
-bool	check_input(t_input *input);
+bool	check_input(t_input *input, int fd);
+bool	post_input_check(t_input *input);
 
 #endif

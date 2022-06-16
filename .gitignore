@@ -1,2 +1,5 @@
 lem-in
 .vscode/launch.json
+objs/
+libft/*.o
+libft/libft.a

@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   array_manipulation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:42:39 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/06/16 13:04:40 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/06/16 15:17:05 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-void	print_elements(t_array *array)
-{
-	int	i;
-
-	i = 0;
-	ft_printf("Number of elements: %u\nSize of array: %u\n", array->nb_of_elements, array->size);
-	while(i < array->nb_of_elements)
-		ft_printf("%s\n", array->array[i++]);
-	ft_putchar('\n');
-}
 
 bool	init_struct_array(t_array *new)
 {
@@ -71,7 +60,7 @@ void	del_array(char **array, size_t size)
 bool	realloc_array(t_array *array)
 {
 	char	**new;
-	int		i;
+	size_t	i;
 
 	i = 0;
 	array->size *= 2;
