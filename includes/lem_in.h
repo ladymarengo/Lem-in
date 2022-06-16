@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/16 12:44:10 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/06/16 14:43:01 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_input_flags
 typedef struct s_input
 {
 	struct s_input_flags	flags;
-	struct s_array 			rooms;
+	struct s_array			rooms;
 	struct s_array			links;
 	long int				ants;
 	char					*line;
@@ -64,6 +64,8 @@ bool	realloc_array(t_array *array);
 bool	init_struct_array(t_array *new);
 bool	add_element(t_array *array, char *element);
 void	print_elements(t_array *array);
-
+bool	check_ants(char *line, long int *ants);
+bool	read_input(t_input *input, int fd);
+bool	check_input(t_input *input);
 
 #endif
