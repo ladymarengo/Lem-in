@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:42:39 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/06/15 15:22:29 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/06/16 13:04:40 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,14 @@ void	print_elements(t_array *array)
 	ft_putchar('\n');
 }
 
-t_array *init_struct_array(void)
+bool	init_struct_array(t_array *new)
 {
-	t_array	*new;
-
-	new = (t_array *)malloc(sizeof(t_array));
-	if (!new)
-		return (NULL);
 	new->nb_of_elements = 0;
 	new->size = 2;
 	new->array = (char **)malloc(sizeof(char *) * new->size);
 	if (!new->array)
-	{
-		free(new);
-		return (NULL);
-	}
-	return (new);
+		return (false);
+	return (true);
 }
 
 bool	add_element(t_array *array, char *element)
@@ -60,7 +52,6 @@ bool	del_structure_array(t_array *array)
 		if (array->array[array->nb_of_elements])
 			free(array->array[array->nb_of_elements]);
 	free(array->array);
-	free(array);
 	return (true);
 }
 

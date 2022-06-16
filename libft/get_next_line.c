@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 11:31:04 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/15 15:13:44 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/06/16 13:12:39 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,14 +116,13 @@ int	get_next_line(const int fd, char **line)
 	if (BUFF_SIZE <= 0 || fd < 0 || fd > MAX_FD || line == NULL)
 		return (-1);
 	if (*line)
-		free(*line);
+		ft_strdel(line);
 	while (created == 0)
 	{
 		created = create_line(&(saved[fd]), line, state);
 		if (created == 2)
 		{
-			free(saved[fd]);
-			saved[fd] = NULL;
+			ft_strdel(&(saved[fd]));
 			return (0);
 		}
 		else if (created == -1 || created == 1)

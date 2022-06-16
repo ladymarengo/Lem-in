@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/16 12:20:19 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/06/16 13:06:15 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,29 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+void	clean_up(t_input *input)
+{
+	del_structure_array(&(input->rooms));
+	del_structure_array(&(input->links));
+	if (input->line)
+		free(input->line);
+	ft_bzero(input, sizeof(*input));
+}
+
+bool	init_input_structure(t_input *input)
+{
+	input->line = NULL;
+	input->ants = 0;
+	if (!init_struct_array(&(input->rooms)))
+		return (false);
+	if (!init_struct_array(&(input->links)))
+	{
+		del_structure_array(&(input->rooms));
+		return (false);
+	}
+	ft_bzero(&(input->flags), sizeof(input->flags));
+	return (true);
+}
 
 bool	is_room_valid(char *line)
 {
@@ -100,58 +123,52 @@ bool	handle_commands(t_input_flags *flags, char *line)
 	return (true);
 }
 
-int	read_input(int fd)
+int	read_input(t_input *input, int fd)
 {
-	char			*line;
-	long int		ants;
-	t_array			*rooms;
-	t_input_flags	flags;
-
-	line = NULL;
-	ants = 0;
-	rooms = init_struct_array();
-	ft_bzero(&flags, sizeof(flags));
-	if (get_next_line(fd, &line) <= 0 || !check_ants(line, &ants))
+	if (get_next_line(fd, &(input->line)) <= 0 || !check_ants(input->line, &(input->ants)))
 		return (-1);
-	while (get_next_line(fd, &line) > 0)
+	while (get_next_line(fd, &(input->line)) > 0)
 	{
-		if (ft_strcmp("##start", line) == 0 || ft_strcmp("##end", line) == 0)
+		if (ft_strcmp("##start", input->line) == 0 || ft_strcmp("##end", input->line) == 0)
 		{
-			if (!handle_commands(&flags, line))
+			if (!handle_commands(&(input->flags), input->line))
 				return (-1);
 		}
-		else if (!flags.parsing_links && is_room_valid(line))
+		else if (!input->flags.parsing_links && is_room_valid(input->line))
 		{
-			if (!add_element(rooms, line))
+			if (!add_element(&(input->rooms), input->line))
 				return (-1);
-			flags.next_start = false;
-			flags.next_end = false;
+			input->flags.next_start = false;
+			input->flags.next_end = false;
 		}
-		else if (is_link_valid(line) && !flags.next_start && !flags.next_end)
+		else if (is_link_valid(input->line) && !input->flags.next_start && !input->flags.next_end)
 		{
-			flags.parsing_links = true;
+			input->flags.parsing_links = true;
 		}
-		else if (line[0] != '#' || flags.next_start || flags.next_end)
+		else if (input->line[0] != '#' || input->flags.next_start || input->flags.next_end)
 			return (-1);
 	}
-	print_elements(rooms);
-	del_structure_array(rooms);
+	print_elements(&(input->rooms));
 	return (0);
 }
 
 int	main(int argc, char **argv)
 {
 	int	fd;
+	t_input	input;
 	
+	if (!init_input_structure(&input))
+		return (-1);
 	if (argc != 1)
 		fd = open(argv[1], O_RDONLY);
 	else
 		fd = 0;
-	if (read_input(fd) != 0)
+	if (read_input(&input, fd) != 0)
 		ft_printf("Invalid\n");
 	else
 		ft_printf("Valid\n");
 	if (fd != 0)
 		close(fd);
+	clean_up(&input);
 	return (0);
 }
