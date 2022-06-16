@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/15 15:27:54 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/06/16 12:20:19 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,72 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-void	put_room_to_list(char *line, bool start, bool end)
-{
-}
-
-void	put_link_to_list(char *line)
-{
-}
 
 bool	is_room_valid(char *line)
 {
+	int	i;
+
+	i = 0;
+	if (line[0] == 'L' || line[0] == '#')
+		return (false);
+	while (line[i] && line[i] != ' ')
+		i++;
+	if (!line[i++])
+		return (false);
+	while (line[i] != ' ')
+	{
+		if (!line[i] || line[i] < '0' || line[i] > '9')
+			return (false);
+		i++;
+	}
+	i++;
+	if (!line[i])
+		return (false);
+	while (line[i])
+	{
+		if (line[i] < '0' || line[i] > '9')
+			return (false);
+		i++;
+	}
 	return (true);
 }
 
 bool	is_link_valid(char *line)
 {
+	int	i;
+
+	i = 0;	
+	while (line[i] != '-')
+	{
+		if (!line[i] || line[i] < '0' || line[i] > '9')
+			return (false);
+		i++;
+	}
+	i++;
+	if (!line[i])
+		return (false);
+	while (line[i])
+	{
+		if (line[i] < '0' || line[i] > '9')
+			return (false);
+		i++;
+	}
 	return (true);
 }
 
-bool	check_ants(char *line, int *ants)
+bool	check_ants(char *line, long int *ants)
 {
+	while (*line)
+	{
+		if (!(*line) || *line < '0' || *line > '9')
+			return (false);
+		*ants *= 10;
+		*ants += *line - '0';
+		line++;
+	}
+	ft_printf("ants: %ld\n", *ants);
+	if (*ants < 1 || *ants > MAX_INT)
+		return (false);
 	return (true);
 }
 
@@ -57,11 +103,12 @@ bool	handle_commands(t_input_flags *flags, char *line)
 int	read_input(int fd)
 {
 	char			*line;
-	int				ants;
+	long int		ants;
 	t_array			*rooms;
 	t_input_flags	flags;
 
 	line = NULL;
+	ants = 0;
 	rooms = init_struct_array();
 	ft_bzero(&flags, sizeof(flags));
 	if (get_next_line(fd, &line) <= 0 || !check_ants(line, &ants))
@@ -80,12 +127,11 @@ int	read_input(int fd)
 			flags.next_start = false;
 			flags.next_end = false;
 		}
-		else if (is_link_valid(line))
+		else if (is_link_valid(line) && !flags.next_start && !flags.next_end)
 		{
-			put_link_to_list(line);
 			flags.parsing_links = true;
 		}
-		else if (line[0] != '#')
+		else if (line[0] != '#' || flags.next_start || flags.next_end)
 			return (-1);
 	}
 	print_elements(rooms);
