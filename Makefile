@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 14:17:22 by nsamoilo          #+#    #+#              #
-#    Updated: 2022/06/16 15:16:42 by nsamoilo         ###   ########.fr        #
+#    Updated: 2022/06/17 15:18:07 by jheiskan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,10 +43,12 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 clean:
 	@make clean -C $(LIB_DIR) --silent
 	@rm -f $(OBJ)
+	@rm -rf $(OBJ_DIR)
 	@echo "Removed object files"
 
 fclean: clean
 	@rm -f $(NAME)
+	@rm -rf $(OBJ_DIR)
 	@make fclean -C $(LIB_DIR) --silent
 	@echo "Removed executables"
 
