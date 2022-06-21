@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 15:52:05 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/21 16:54:26 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:07:57 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,31 @@ bool	init_rooms(t_input *input, t_data *data)
 	return (true);
 }
 
+void	init_room(t_input *input, t_data *data, int i)
+{
+	data->rooms[i].name = input->rooms.array[i];
+	if (i == data->start)
+		data->rooms[i].start = true;
+	if (i == data->end)
+		data->rooms[i].end = true;
+	data->rooms[i].links = NULL;
+	data->rooms[i].input = NULL;
+	data->rooms[i].output = NULL;
+	data->rooms[i].bfs_level = -1;
+}
+
 bool	make_rooms(t_input *input, t_data *data)
 {
+	int	i;
+
 	if (!init_rooms(input, data))
 		return (false);
 	parse_start_end(input, data);
+	i = 0;
+	while (i < data->number_of_rooms)
+	{
+		init_room(input, data, i);
+		i++;
+	}
 	return (true);
 }
