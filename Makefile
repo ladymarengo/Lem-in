@@ -6,7 +6,7 @@
 #    By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 14:17:22 by nsamoilo          #+#    #+#              #
-#    Updated: 2022/06/17 15:18:07 by jheiskan         ###   ########.fr        #
+#    Updated: 2022/06/21 12:11:07 by jheiskan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ FLAGS = -Wall -Wextra -Werror
 
 INCL = -Iincludes/ -I$(LIB_DIR)/includes
 
-SRCS =	main.c array_manipulation.c parsing.c validation.c testing.c
+SRCS =	main.c array_manipulation.c parsing.c validation.c testing.c sorting.c
 
 OBJ_NAME = $(SRCS:.c=.o)
 

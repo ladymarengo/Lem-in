@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/16 15:14:04 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/21 12:11:20 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_input
 	char					*line;
 }	t_input;
 
+bool	sort_array(char **arr, int size);
 bool	del_structure_array(t_array *array);
 void	del_array(char **array, size_t size);
 bool	realloc_array(t_array *array);

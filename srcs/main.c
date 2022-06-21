@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/16 15:37:04 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/21 13:45:59 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,26 +38,52 @@ bool	init_input_structure(t_input *input)
 	return (true);
 }
 
-bool	coords_dups(t_array *rooms)
+char	**copy_coords(t_array *rooms)
 {
 	char	**coords;
 	size_t	i;
+	char	*tmp;
 
 	i = 0;
 	coords = (char **)malloc(sizeof(char *) * rooms->nb_of_elements);
+	if (!coords)
+		return (NULL);
 	while (i < rooms->nb_of_elements)
 	{
-		coords[i] = ft_strchr(rooms->array[i], ' ') + 1;
-		ft_putendl(coords[i]);
+		tmp = ft_strchr(rooms->array[i], ' ');
+		*tmp = '\0';
+		coords[i] = tmp + 1;
 		i++;
 	}
-	return (false);
+	return (coords);
 }
 
-bool	check_dups(t_input *input)
+bool	check_dups(char **arr, int size)
 {
-	if (coords_dups(&(input->rooms)))
+	while (size-- > 1)
+	{
+		if (ft_strequ(arr[size], arr[size - 1]) == 1)
+			return (false);		
+	}
+	return (true);
+}
+
+bool	no_dups(t_array *rooms)
+{
+	char	**coords;
+	
+	coords = copy_coords(rooms);
+	if (!coords)
 		return (false);
+	if (!sort_array(rooms->array, rooms->nb_of_elements)
+		|| !sort_array(coords, rooms->nb_of_elements)
+		|| !check_dups(rooms->array, rooms->nb_of_elements)
+		|| !check_dups(coords, rooms->nb_of_elements))
+	{
+		free(coords);
+		return (false);
+	}
+	free(coords);
 	return (true);
 }
 
@@ -66,9 +92,9 @@ bool	read_input(t_input *input, int fd)
 	if (get_next_line(fd, &(input->line)) <= 0
 		|| !check_ants(input->line, &(input->ants)))
 		return (false);
-	if (!check_input(input, fd) || !post_input_check(input))
+	if (!check_input(input, fd) || !post_input_check(input)
+		|| !no_dups(&(input->rooms)))
 		return (false);
-	check_dups(input);
 	return (true);
 }
 

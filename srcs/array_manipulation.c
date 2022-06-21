@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   array_manipulation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:42:39 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/06/16 15:17:05 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/21 12:04:39 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	del_array(char **array, size_t size)
 	size_t	i;
 
 	i = 0;
+	if (!array)
+		return ;
 	while (i < size && array[i])
 	{
 		free(array[i]);
