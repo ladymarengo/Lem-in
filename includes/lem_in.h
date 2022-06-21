@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/21 17:07:25 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:17:11 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ bool	no_dups(t_array *rooms);
 bool	handle_commands(t_input_flags *flags, char *line);
 void	parse_start_end(t_input *input, t_data *data);
 bool	make_rooms(t_input *input, t_data *data);
+int		binary_search(char **array, char *str, int start, int end);
 
 #endif
