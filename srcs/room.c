@@ -1,54 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   linked_list.c                                      :+:      :+:    :+:   */
+/*   room.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/14 15:35:43 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/21 15:51:27 by nsamoilo         ###   ########.fr       */
+/*   Created: 2022/06/21 15:52:05 by nsamoilo          #+#    #+#             */
+/*   Updated: 2022/06/21 16:54:26 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	del_stack(t_list *stack)
+bool	init_rooms(t_input *input, t_data *data)
 {
-	t_list	*tmp;
-
-	while (stack)
-	{
-		tmp = stack->next;
-		free(stack);
-		stack = tmp;
-	}
-}
-
-t_list	*new_node(int index)
-{
-	t_list	*new;
-
-	new = (t_list *)malloc(sizeof(t_list));
-	if (!new)
-		return (NULL);
-	new->room = index;
-	new->next = NULL;
-	return (new);
-}
-
-bool	add_to_start(t_list **a, int index)
-{
-	t_list	*tmp;
-
-	if (!a || !*a)
-		(*a) = new_node(index);
-	else
-	{
-		tmp = new_node(index);
-		tmp->next = *a;
-		*a = tmp;
-	}
-	if (!(*a))
+	data->number_of_rooms = input->rooms.nb_of_elements;
+	data->rooms = (t_room *)malloc(sizeof(t_room) * data->number_of_rooms);
+	if (!data->rooms)
 		return (false);
+	return (true);
+}
+
+bool	make_rooms(t_input *input, t_data *data)
+{
+	if (!init_rooms(input, data))
+		return (false);
+	parse_start_end(input, data);
 	return (true);
 }

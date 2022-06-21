@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:38:07 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/16 15:14:22 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/21 16:53:59 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,37 +48,25 @@ bool	is_link_valid(char *line)
 	i = 0;
 	while (line[i] != '-')
 	{
-		if (!line[i] || line[i] < '0' || line[i] > '9')
+		if (!line[i])
 			return (false);
 		i++;
 	}
-	i++;
-	if (!line[i])
+	if (!line[i + 1])
 		return (false);
-	while (line[i])
-	{
-		if (line[i] < '0' || line[i] > '9')
-			return (false);
-		i++;
-	}
 	return (true);
 }
 
-bool	handle_commands(t_input_flags *flags, char *line)
+void	handle_start_end(t_input *input)
 {
-	if (ft_strcmp("##start", line) == 0 && !flags->start && !flags->next_e)
-	{
-		flags->start = true;
-		flags->next_s = true;
-	}
-	else if (ft_strcmp("##end", line) == 0 && !flags->end && !flags->next_s)
-	{
-		flags->end = true;
-		flags->next_e = true;
-	}
-	else
-		return (false);
-	return (true);
+	if (input->flags.next_s)
+		input->start = ft_strdup(input->rooms.array \
+		[input->rooms.nb_of_elements - 1]);
+	else if (input->flags.next_e)
+		input->end = ft_strdup(input->rooms.array \
+		[input->rooms.nb_of_elements - 1]);
+	input->flags.next_s = false;
+	input->flags.next_e = false;
 }
 
 bool	check_input(t_input *inp, int fd)
@@ -94,8 +82,7 @@ bool	check_input(t_input *inp, int fd)
 		{
 			if (!add_element(&(inp->rooms), inp->line))
 				return (false);
-			inp->flags.next_s = false;
-			inp->flags.next_e = false;
+			handle_start_end(inp);
 		}
 		else if (is_link_valid(inp->line)
 			&& !inp->flags.next_s && !inp->flags.next_e)
@@ -112,6 +99,7 @@ bool	check_input(t_input *inp, int fd)
 
 bool	post_input_check(t_input *input)
 {
+	ft_printf("nb %d\n", input->links.nb_of_elements);
 	if (!input->flags.start || !input->flags.end
 		|| input->links.nb_of_elements == 0)
 		return (false);

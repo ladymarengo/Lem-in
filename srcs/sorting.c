@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 11:53:04 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/06/21 13:46:17 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/06/21 15:27:37 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	**copy_array(char **arr, int start, int size)
 {
-	int	i;
+	int		i;
 	char	**new;
 
 	new = (char **)malloc(sizeof(char *) * (size + 1));
@@ -55,7 +55,7 @@ bool	merge_arrays(char **arr, int start, int mid, int end)
 {
 	char	**first;
 	char	**second;
-	
+
 	first = copy_array(arr, start, mid - start + 1);
 	if (!first)
 		return (false);
@@ -74,11 +74,11 @@ bool	merge_arrays(char **arr, int start, int mid, int end)
 bool	merge_sort(char **arr, int start, int end)
 {
 	int	mid;
-	
+
 	if (start < end)
 	{
 		mid = (end - start) / 2 + start;
-		if(!merge_sort(arr, start, mid) || !merge_sort(arr, mid + 1, end))
+		if (!merge_sort(arr, start, mid) || !merge_sort(arr, mid + 1, end))
 			return (false);
 		if (!merge_arrays(arr, start, mid, end))
 			return (false);
@@ -90,7 +90,5 @@ bool	sort_array(char **arr, int size)
 {
 	if (!merge_sort(arr, 0, size - 1))
 		return (false);
-	for(int i = 0; i < size; i++)
-		ft_putendl(arr[i]);
 	return (true);
-} 
+}

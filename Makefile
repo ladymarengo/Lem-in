@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+         #
+#    By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 14:17:22 by nsamoilo          #+#    #+#              #
-#    Updated: 2022/06/21 12:11:07 by jheiskan         ###   ########.fr        #
+#    Updated: 2022/06/21 15:52:18 by nsamoilo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ FLAGS = -Wall -Wextra -Werror
 
 INCL = -Iincludes/ -I$(LIB_DIR)/includes
 
-SRCS =	main.c array_manipulation.c parsing.c validation.c testing.c sorting.c
+SRCS =	main.c char_array_manipulation.c parsing.c validation.c testing.c sorting.c check_duplicates.c room.c
 
 OBJ_NAME = $(SRCS:.c=.o)
 

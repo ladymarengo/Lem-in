@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/21 12:11:20 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/06/21 16:31:00 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,18 @@ typedef struct s_array
 	size_t	nb_of_elements;
 }	t_array;
 
-// typedef struct s_list
-// {
-// 	char			*line;
-// 	bool			start;
-// 	bool			end;
-// 	struct s_list	*next;
-// }	t_list;
+typedef struct s_room_array
+{
+	struct s_room	*rooms;
+	size_t			size;
+	size_t			nb_of_elements;
+}	t_room_array;
 
-// typedef struct s_rooms_links
-// {
-// 	struct s_list	*rooms;
-// 	struct s_list	*links;
-// 	int				rooms_len;
-// }	t_rooms_links;
+typedef struct s_list
+{
+	int				room;
+	struct s_list	*next;
+}	t_list;
 
 typedef struct s_input_flags
 {
@@ -56,7 +54,28 @@ typedef struct s_input
 	struct s_array			links;
 	long int				ants;
 	char					*line;
+	char					*start;
+	char					*end;
 }	t_input;
+
+typedef struct s_room
+{
+	char			*name;
+	bool			start;
+	bool			end;
+	struct s_list	*links;
+	struct s_list	*input;
+	struct s_list	*output;
+	int				bfs_level;
+}	t_room;
+
+typedef struct s_data
+{
+	int				number_of_rooms;
+	struct s_room	*rooms;
+	int				start;
+	int				end;
+}	t_data;
 
 bool	sort_array(char **arr, int size);
 bool	del_structure_array(t_array *array);
@@ -68,5 +87,9 @@ void	print_elements(t_array *array);
 bool	check_ants(char *line, long int *ants);
 bool	check_input(t_input *input, int fd);
 bool	post_input_check(t_input *input);
+bool	no_dups(t_array *rooms);
+bool	handle_commands(t_input_flags *flags, char *line);
+void	parse_start_end(t_input *input, t_data *data);
+bool	make_rooms(t_input *input, t_data *data);
 
 #endif
