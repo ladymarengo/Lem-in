@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/22 12:15:40 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/06/22 12:18:12 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,13 @@ int	main(int argc, char **argv)
 		fd = open(argv[1], O_RDONLY);
 	else
 		fd = 0;
-	if (!read_input(&input, fd))
-		ft_printf("Invalid\n");
-	else
-		ft_printf("Valid\n");
+	if (!read_input(&input, fd) || !make_rooms(&input, &data))
+		ft_printf("ERROR\n");
 	if (fd != 0)
 		close(fd);
 	// print_elements(&(input.rooms));
 	print_elements(&(input.links));
 	// ft_printf("Start: %s\nEnd: %s\n", input.start, input.end);
-	if (!make_rooms(&input, &data))
-		ft_printf("Invalid link\n");
-	else
-		ft_printf("Valid link\n");
 	clean_up(&input, &data);
 	return (0);
 }

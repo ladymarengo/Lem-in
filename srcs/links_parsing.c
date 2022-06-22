@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:20:33 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/22 12:02:24 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/06/22 12:23:00 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ bool	parse_link(t_data *data, t_array *rooms, char *link)
 	room++;
 	first = binary_search(rooms->array, link, 0, rooms->nb_of_elements - 1);
 	second = binary_search(rooms->array, room, 0, rooms->nb_of_elements - 1);
+	*(room - 1) = '-';
 	if (first < 0 || second < 0 || first == second
 		|| find_node(data->rooms[first].links, second)
 		|| find_node(data->rooms[second].links, first))
