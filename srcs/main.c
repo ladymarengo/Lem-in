@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/22 14:36:49 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/22 15:09:37 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	clean_up(t_input *input, t_data *data)
 	free(data->rooms);
 	del_list(data->shortest_path);
 	del_list(data->bfs.queue);
-	del_list(data->bfs.tmp);
 	if (data->bfs.visited)
 		free(data->bfs.visited);
 }
