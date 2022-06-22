@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/22 12:18:12 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/06/22 14:36:49 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ void	clean_up(t_input *input, t_data *data)
 	while (data->number_of_rooms-- > 0)
 		del_room(&data->rooms[data->number_of_rooms]);
 	free(data->rooms);
+	del_list(data->shortest_path);
+	del_list(data->bfs.queue);
+	del_list(data->bfs.tmp);
+	if (data->bfs.visited)
+		free(data->bfs.visited);
 }
 
 bool	init_input_structure(t_input *input)
@@ -44,6 +49,17 @@ bool	init_input_structure(t_input *input)
 		return (false);
 	}
 	ft_bzero(&(input->flags), sizeof(input->flags));
+	return (true);
+}
+
+bool	init_data_structure(t_data *data)
+{
+	data->number_of_rooms = 0;
+	data->rooms = NULL;
+	data->shortest_path = NULL;
+	data->bfs.queue = NULL;
+	data->bfs.visited = NULL;
+	data->bfs.tmp = NULL;
 	return (true);
 }
 
@@ -64,18 +80,22 @@ int	main(int argc, char **argv)
 	t_input	input;
 	t_data	data;
 
-	if (!init_input_structure(&input))
+	data.shortest_path = NULL;
+	if (!init_input_structure(&input) || !init_data_structure(&data))
 		return (-1);
 	if (argc != 1)
 		fd = open(argv[1], O_RDONLY);
 	else
 		fd = 0;
-	if (!read_input(&input, fd) || !make_rooms(&input, &data))
+	if (!read_input(&input, fd) || !make_rooms(&input, &data) || !bfs(&data))
+		// || !save_shortest_path(&data))
 		ft_printf("ERROR\n");
+	// else
+	// 	print_list(data.shortest_path);
 	if (fd != 0)
 		close(fd);
-	// print_elements(&(input.rooms));
-	print_elements(&(input.links));
+	print_elements(&(input.rooms));
+	// print_elements(&(input.links));
 	// ft_printf("Start: %s\nEnd: %s\n", input.start, input.end);
 	clean_up(&input, &data);
 	return (0);

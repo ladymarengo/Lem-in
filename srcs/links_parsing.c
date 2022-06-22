@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   links_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:20:33 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/22 12:23:00 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/06/22 14:24:13 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,6 @@ bool	parse_links(t_input *input, t_data *data)
 	{
 		if (!parse_link(data, &input->rooms, input->links.array[i++]))
 			return (false);
-	}
-	for(int i=0; i < data->number_of_rooms; i++)
-	{
-		ft_printf("Room name: %s\n", data->rooms[i].name);
-		print_list(data->rooms[i].links);
 	}
 	return (true);
 }

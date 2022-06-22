@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:43 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/22 12:09:56 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/06/22 13:31:11 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	find_node(t_list *list, int number)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	while (list)
 	{
@@ -65,4 +65,34 @@ bool	add_to_start(t_list **a, int index)
 	if (!(*a))
 		return (false);
 	return (true);
+}
+
+bool	add_to_end(t_list **a, int index)
+{
+	t_list	*tmp;
+
+	if (!a || !*a)
+		(*a) = new_node(index);
+	else
+	{
+		while ((*a)->next)
+			*a = (*a)->next;
+		tmp = new_node(index);
+		if (!tmp)
+			return (false);
+		(*a)->next = tmp;
+	}
+	return (true);
+}
+
+int	pop_first_node(t_list **a)
+{
+	int		number;
+	t_list	*tmp;
+
+	number = (*a)->room;
+	tmp = (*a)->next;
+	free(*a);
+	*a = tmp;
+	return (number);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/22 12:11:56 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/06/22 14:21:03 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,23 @@ typedef struct s_room
 	int				bfs_level;
 }	t_room;
 
+typedef struct s_bfs
+{
+	t_list	*queue;
+	bool	*visited;
+	int		current;
+	t_list	*tmp;
+	int		link;
+}	t_bfs;
+
 typedef struct s_data
 {
 	int				number_of_rooms;
 	struct s_room	*rooms;
 	int				start;
 	int				end;
+	t_bfs			bfs;
+	t_list			*shortest_path;
 }	t_data;
 
 bool	sort_array(char **arr, int size);
@@ -94,9 +105,14 @@ bool	make_rooms(t_input *input, t_data *data);
 int		binary_search(char **array, char *str, int start, int end);
 bool	parse_links(t_input *input, t_data *data);
 bool	add_to_start(t_list **a, int index);
+bool	add_to_end(t_list **a, int index);
 bool	find_node(t_list *list, int number);
 bool	print_list(t_list *list);
 void	del_list(t_list *list);
 void	del_room(t_room *room);
+int		pop_first_node(t_list **a);
+void	print_bfs_levels(t_data *data);
+bool	bfs(t_data *data);
+bool	save_shortest_path(t_data *data);
 
 #endif

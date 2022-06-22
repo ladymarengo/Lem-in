@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   testing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:16:21 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/22 11:49:17 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/06/22 13:41:24 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,16 @@ void	print_elements(t_array *array)
 	while (i < array->nb_of_elements)
 		ft_printf("%s\n", array->array[i++]);
 	ft_putchar('\n');
+}
+
+void	print_bfs_levels(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->number_of_rooms)
+	{
+		ft_printf("Room: %s, bfs level: %d\n", data->rooms[i].name, data->rooms[i].bfs_level);
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:38:07 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/21 16:53:59 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/22 14:46:07 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	handle_start_end(t_input *input)
 	else if (input->flags.next_e)
 		input->end = ft_strdup(input->rooms.array \
 		[input->rooms.nb_of_elements - 1]);
+	// add malloc protection
 	input->flags.next_s = false;
 	input->flags.next_e = false;
 }
@@ -99,7 +100,6 @@ bool	check_input(t_input *inp, int fd)
 
 bool	post_input_check(t_input *input)
 {
-	ft_printf("nb %d\n", input->links.nb_of_elements);
 	if (!input->flags.start || !input->flags.end
 		|| input->links.nb_of_elements == 0)
 		return (false);
