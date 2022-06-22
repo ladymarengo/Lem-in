@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   room.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 15:52:05 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/21 17:07:57 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/22 12:10:54 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void	del_room(t_room *room)
+{
+	del_list(room->links);
+	del_list(room->input);
+	del_list(room->output);
+}
 
 bool	init_rooms(t_input *input, t_data *data)
 {
@@ -47,5 +54,7 @@ bool	make_rooms(t_input *input, t_data *data)
 		init_room(input, data, i);
 		i++;
 	}
+	if (!parse_links(input, data))
+		return (false);
 	return (true);
 }

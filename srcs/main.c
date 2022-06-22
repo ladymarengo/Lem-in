@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/21 17:20:12 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/22 12:15:40 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-void	clean_up(t_input *input)
+void	clean_up(t_input *input, t_data *data)
 {
 	del_structure_array(&(input->rooms));
 	del_structure_array(&(input->links));
@@ -25,6 +25,9 @@ void	clean_up(t_input *input)
 	if (input->end)
 		free(input->end);
 	ft_bzero(input, sizeof(*input));
+	while (data->number_of_rooms-- > 0)
+		del_room(&data->rooms[data->number_of_rooms]);
+	free(data->rooms);
 }
 
 bool	init_input_structure(t_input *input)
@@ -73,10 +76,13 @@ int	main(int argc, char **argv)
 		ft_printf("Valid\n");
 	if (fd != 0)
 		close(fd);
-	print_elements(&(input.rooms));
+	// print_elements(&(input.rooms));
 	print_elements(&(input.links));
-	ft_printf("Start: %s\nEnd: %s\n", input.start, input.end);
-	make_rooms(&input, &data);
-	clean_up(&input);
+	// ft_printf("Start: %s\nEnd: %s\n", input.start, input.end);
+	if (!make_rooms(&input, &data))
+		ft_printf("Invalid link\n");
+	else
+		ft_printf("Valid link\n");
+	clean_up(&input, &data);
 	return (0);
 }

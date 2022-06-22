@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   testing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:16:21 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/16 15:16:34 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/22 11:49:17 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+bool	print_list(t_list *list)
+{
+	t_list *tmp;
+
+	ft_printf("Printing list\n");
+	while (list)
+	{
+		ft_printf("Element: %d\n", list->room);
+		tmp = list->next;
+		list = tmp;
+	}
+	return (false);
+}
 
 void	print_elements(t_array *array)
 {

@@ -3,24 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:43 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/21 15:51:27 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/22 12:09:56 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	del_stack(t_list *stack)
+bool	find_node(t_list *list, int number)
+{
+	t_list *tmp;
+
+	while (list)
+	{
+		if (list->room == number)
+			return (true);
+		tmp = list->next;
+		list = tmp;
+	}
+	return (false);
+}
+
+void	del_list(t_list *list)
 {
 	t_list	*tmp;
 
-	while (stack)
+	while (list)
 	{
-		tmp = stack->next;
-		free(stack);
-		stack = tmp;
+		tmp = list->next;
+		free(list);
+		list = tmp;
 	}
 }
 

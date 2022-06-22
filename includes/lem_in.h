@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/21 17:17:11 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/22 12:11:56 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,11 @@ bool	handle_commands(t_input_flags *flags, char *line);
 void	parse_start_end(t_input *input, t_data *data);
 bool	make_rooms(t_input *input, t_data *data);
 int		binary_search(char **array, char *str, int start, int end);
+bool	parse_links(t_input *input, t_data *data);
+bool	add_to_start(t_list **a, int index);
+bool	find_node(t_list *list, int number);
+bool	print_list(t_list *list);
+void	del_list(t_list *list);
+void	del_room(t_room *room);
 
 #endif
