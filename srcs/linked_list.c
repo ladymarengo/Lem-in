@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:43 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/22 15:07:00 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/22 18:13:01 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ bool	add_to_start(t_list **a, int index)
 bool	add_to_end(t_list **a, int index)
 {
 	t_list	*tmp;
+	t_list	*list;
 
 	if (!a)
 		return (false);
@@ -77,12 +78,13 @@ bool	add_to_end(t_list **a, int index)
 		(*a) = new_node(index);
 	else
 	{
-		while ((*a)->next)
-			*a = (*a)->next;
+		list = *a;
+		while (list->next)
+			list = list->next;
 		tmp = new_node(index);
 		if (!tmp)
 			return (false);
-		(*a)->next = tmp;
+		list->next = tmp;
 	}
 	// all malloc protection
 	return (true);

@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/22 15:09:37 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/22 18:07:18 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,11 @@ int	main(int argc, char **argv)
 		fd = open(argv[1], O_RDONLY);
 	else
 		fd = 0;
-	if (!read_input(&input, fd) || !make_rooms(&input, &data) || !bfs(&data))
-		// || !save_shortest_path(&data))
+	if (!read_input(&input, fd) || !make_rooms(&input, &data) || !bfs(&data)
+		|| !save_shortest_path(&data))
 		ft_printf("ERROR\n");
-	// else
-	// 	print_list(data.shortest_path);
+	else
+		print_list(data.shortest_path);
 	if (fd != 0)
 		close(fd);
 	print_elements(&(input.rooms));

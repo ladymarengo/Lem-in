@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:19:50 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/22 15:09:03 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/06/22 18:13:56 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ bool	save_shortest_path(t_data *data)
 	current = data->end;
 	while (current != data->start)
 	{
-		if (!add_to_end(&data->shortest_path, current))
+		if (!add_to_start(&data->shortest_path, current))
 			return (false);
 		current = find_best(data->rooms[current].links, data, current);
 	}
