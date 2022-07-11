@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/11 15:41:51 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/07/11 17:27:16 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,9 @@ int	main(int argc, char **argv)
 		{
 			update_links(&data);
 			del_input_forks(&data);
-			print_rooms_links(&data);
+			del_output_forks(&data);
+			// print_rooms_links(&data);
+			print_paths(&data);
 		}
 		
 	if (fd != 0)

@@ -6,7 +6,7 @@
 #    By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 14:17:22 by nsamoilo          #+#    #+#              #
-#    Updated: 2022/07/11 15:40:37 by jheiskan         ###   ########.fr        #
+#    Updated: 2022/07/11 16:40:04 by jheiskan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ INCL = -Iincludes/ -I$(LIB_DIR)/includes
 
 SRCS =	main.c char_array_manipulation.c parsing.c validation.c testing.c \
 sorting.c check_duplicates.c room.c search.c links_parsing.c linked_list.c \
-bfs.c links.c input_forks.c
+bfs.c links.c input_forks.c output_forks.c
 
 OBJ_NAME = $(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/11 15:40:51 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/07/11 17:05:14 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,8 @@ void	print_rooms_links(t_data *data);
 bool	update_links(t_data *data);
 void	del_elem(t_list **list, int elem);
 bool	del_input_forks(t_data *data);
+bool	combine_lists(t_list **list, t_list *add);
+bool	del_output_forks(t_data *data);
+void	print_paths(t_data *data);
 
 #endif

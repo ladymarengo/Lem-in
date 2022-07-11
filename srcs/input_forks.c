@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 14:50:40 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/07/11 16:12:10 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/07/11 16:22:12 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,6 @@ void	delete_extra_output(t_data *data, int room, int best)
 			del_elem(&(data->rooms[tmp->room].output), room);
 		tmp = tmp->next;
 	}
-}
-
-bool	combine_lists(t_list **list, t_list *add)
-{
-	t_list *tmp;
-
-	tmp = add;
-	while (tmp)
-	{
-		if (!add_to_end(list, tmp->room))
-			return (false);
-		tmp = tmp->next;
-	}
-	return (true);
 }
 
 bool	check_input_forks(t_data *data, int room)
@@ -96,5 +82,4 @@ bool	del_input_forks(t_data *data)
 			return (false);
 	}
 	return (true);
-	
 }
