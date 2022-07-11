@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   links.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 11:22:05 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/11 13:10:47 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/11 14:37:03 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	check_output(int room, t_data *data)
 		while (tmp)
 		{
 			del_elem(&(data->rooms[tmp->room].output), room);
+			check_output(tmp->room, data);
 			tmp = tmp->next;
 		}
 	}

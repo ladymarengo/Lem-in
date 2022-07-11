@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:43 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/11 12:58:34 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/11 14:37:37 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	del_elem(t_list **list, int elem)
 	{
 		tmp = (*list)->next;
 		free(*list);
-		list = &tmp;
+		*list = tmp;
 		return ;
 	}
 	tmp = *list;

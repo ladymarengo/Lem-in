@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:38:07 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/22 14:46:07 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/11 14:24:16 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ bool	is_link_valid(char *line)
 	int	i;
 
 	i = 0;
+	if (line[0] == 'L' || line[0] == '#')
+		return (false);
 	while (line[i] != '-')
 	{
 		if (!line[i])
