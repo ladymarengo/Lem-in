@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:19:50 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/22 18:13:56 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/11 12:36:11 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ bool	bfs(t_data *data)
 	while (data->bfs.queue)
 	{
 		data->bfs.current = pop_first_node(&data->bfs.queue);
+		if (data->bfs.current == data->end)
+			continue ;
 		data->bfs.tmp = data->rooms[data->bfs.current].links;
 		while (data->bfs.tmp)
 		{
@@ -48,7 +50,8 @@ int	find_best(t_list *list, t_data *data, int current)
 	best = current;
 	while (list)
 	{
-		if (data->rooms[list->room].bfs_level < data->rooms[best].bfs_level)
+		if (data->rooms[list->room].bfs_level < data->rooms[best].bfs_level
+			&& data->rooms[list->room].bfs_level != -1)
 			best = list->room;
 		list = list->next;
 	}

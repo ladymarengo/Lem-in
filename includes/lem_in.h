@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/22 14:21:03 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/11 11:56:51 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,7 @@ int		pop_first_node(t_list **a);
 void	print_bfs_levels(t_data *data);
 bool	bfs(t_data *data);
 bool	save_shortest_path(t_data *data);
+void	print_rooms_links(t_data *data);
+bool	update_links(t_data *data);
 
 #endif

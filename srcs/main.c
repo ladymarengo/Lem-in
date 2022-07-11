@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/22 18:07:18 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/11 11:57:14 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,15 @@ int	main(int argc, char **argv)
 		|| !save_shortest_path(&data))
 		ft_printf("ERROR\n");
 	else
-		print_list(data.shortest_path);
+		// print_list(data.shortest_path);
+		{
+			update_links(&data);
+			print_rooms_links(&data);
+		}
+		
 	if (fd != 0)
 		close(fd);
-	print_elements(&(input.rooms));
+	// print_elements(&(input.rooms));
 	// print_elements(&(input.links));
 	// ft_printf("Start: %s\nEnd: %s\n", input.start, input.end);
 	clean_up(&input, &data);
