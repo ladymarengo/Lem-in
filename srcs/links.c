@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 11:22:05 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/11 12:08:48 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/11 13:10:47 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,39 @@ bool	delete_useless_links(t_data *data)
 	return (true);
 }
 
+void	check_output(int room, t_data *data)
+{
+	t_list	*tmp;
+
+	if (data->rooms[room].output == NULL)
+	{
+		data->rooms[room].bfs_level = -1;
+		tmp = data->rooms[room].input;
+		while (tmp)
+		{
+			del_elem(&(data->rooms[tmp->room].output), room);
+			tmp = tmp->next;
+		}
+	}
+}
+
+void	delete_dead_ends(t_data *data)
+{
+	int		i;
+
+	i = 0;
+	while (i < data->number_of_rooms)
+	{
+		if (data->rooms[i].bfs_level != -1 && i != data->end)
+			check_output(i, data);
+		i++;
+	}
+}
+
 bool	update_links(t_data *data)
 {
 	data->rooms[data->end].bfs_level = MAX_INT;
 	delete_useless_links(data);
+	delete_dead_ends(data);
 	return (true);
 }

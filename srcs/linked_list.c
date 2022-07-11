@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:43 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/11 11:38:07 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/11 12:58:34 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,32 @@ void	del_list(t_list *list)
 		tmp = list->next;
 		free(list);
 		list = tmp;
+	}
+}
+
+void	del_elem(t_list **list, int elem)
+{
+	t_list	*tmp;
+	t_list	*delete;
+
+	if ((*list)->room == elem)
+	{
+		tmp = (*list)->next;
+		free(*list);
+		list = &tmp;
+		return ;
+	}
+	tmp = *list;
+	while (tmp->next)
+	{
+		if (tmp->next->room == elem)
+		{
+			delete = tmp->next;
+			tmp->next = tmp->next->next;
+			free(delete);
+			return ;
+		}
+		tmp = tmp->next;
 	}
 }
 
