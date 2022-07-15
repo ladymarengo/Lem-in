@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/11 17:27:16 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/07/15 12:46:44 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	main(int argc, char **argv)
 		
 	if (fd != 0)
 		close(fd);
+	//print_rooms_links(&data);
 	// print_elements(&(input.rooms));
 	// print_elements(&(input.links));
 	// ft_printf("Start: %s\nEnd: %s\n", input.start, input.end);

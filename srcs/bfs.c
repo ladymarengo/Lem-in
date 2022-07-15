@@ -3,22 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   bfs.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:19:50 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/11 12:36:11 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/15 12:46:59 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-bool	bfs(t_data *data)
+bool	init_bfs(t_data *data)
 {
+	int	i;
+
+	i = 0;
 	data->bfs.visited = (bool *)malloc(sizeof(bool) * data->number_of_rooms);
 	if (!data->bfs.visited || !add_to_end(&data->bfs.queue, data->start))
 		return (false);
+	while (i < data->number_of_rooms)
+		data->bfs.visited[i++] = false;
 	data->bfs.visited[data->start] = true;
 	data->rooms[data->start].bfs_level = 0;
+	return (true);
+}
+
+bool	bfs(t_data *data)
+{
+	if (!init_bfs(data))
+		return (false);
 	while (data->bfs.queue)
 	{
 		data->bfs.current = pop_first_node(&data->bfs.queue);

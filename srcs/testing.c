@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:16:21 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/11 17:26:25 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/07/15 12:13:44 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	print_rooms_links(t_data *data)
 	{
 		if (data->rooms[i].bfs_level == -1)
 			continue ;
-		ft_printf("Room: %s. bfs_level is %d\n", data->rooms[i].name, data->rooms[i].bfs_level);
+		ft_printf("Room: %s. bfs_level is %d index: %d\n", data->rooms[i].name, data->rooms[i].bfs_level, i);
 		tmp = data->rooms[i].links;
 		ft_printf("All links:\n");
 		while (tmp)

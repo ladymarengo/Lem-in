@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   links_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:20:33 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/22 14:24:13 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/15 11:42:33 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ bool	parse_link(t_data *data, t_array *rooms, char *link)
 	room++;
 	first = binary_search(rooms->array, link, 0, rooms->nb_of_elements - 1);
 	second = binary_search(rooms->array, room, 0, rooms->nb_of_elements - 1);
+	// if (first == 1165 && second == 2229)
+	// {
+	// 	print_list(data->rooms[first].links);
+	// 	print_list(data->rooms[second].links);
+	// }
 	*(room - 1) = '-';
 	if (first < 0 || second < 0 || first == second
 		|| find_node(data->rooms[first].links, second)
@@ -43,6 +48,8 @@ bool	parse_links(t_input *input, t_data *data)
 	i = 0;
 	while (i < input->links.nb_of_elements)
 	{
+		if (i == 4078)
+			i = 4078;
 		if (!parse_link(data, &input->rooms, input->links.array[i++]))
 			return (false);
 	}
