@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_forks.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 14:50:40 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/07/11 16:22:12 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:06:54 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ void	delete_extra_output(t_data *data, int room, int best)
 	while (tmp)
 	{
 		if (tmp->room != best)
+		{
 			del_elem(&(data->rooms[tmp->room].output), room);
+			check_output(tmp->room, data);
+		}
 		tmp = tmp->next;
 	}
 }

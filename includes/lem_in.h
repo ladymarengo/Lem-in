@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/11 17:05:14 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:04:07 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,6 @@ bool	del_input_forks(t_data *data);
 bool	combine_lists(t_list **list, t_list *add);
 bool	del_output_forks(t_data *data);
 void	print_paths(t_data *data);
+void	check_output(int room, t_data *data);
 
 #endif

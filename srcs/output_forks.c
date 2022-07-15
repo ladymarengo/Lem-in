@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   output_forks.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:21:19 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/07/11 17:00:18 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:07:16 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ bool	del_output_forks(t_data *data)
 	while (data->bfs.queue)
 	{
 		data->bfs.current = pop_first_node(&data->bfs.queue);
+		if (data->bfs.current == 401)
+			ft_printf("");
 		if (data->bfs.current == data->start)
 			continue ;
 		if (!check_output_forks(data, data->bfs.current))
