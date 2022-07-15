@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/15 14:07:25 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:46:49 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,11 @@ bool	init_input_structure(t_input *input)
 
 bool	init_data_structure(t_data *data)
 {
+	data->ants = 0;
 	data->number_of_rooms = 0;
 	data->rooms = NULL;
 	data->shortest_path = NULL;
+	data->paths = NULL;
 	data->bfs.queue = NULL;
 	data->bfs.visited = NULL;
 	data->bfs.tmp = NULL;
@@ -92,11 +94,13 @@ int	main(int argc, char **argv)
 	else
 		// print_list(data.shortest_path);
 		{
+			data.ants = (int) input.ants;
 			update_links(&data);
 			del_input_forks(&data);
 			del_output_forks(&data);
 			// print_rooms_links(&data);
 			print_paths(&data);
+			count_turns(&data);
 		}
 		
 	if (fd != 0)

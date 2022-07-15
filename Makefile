@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+         #
+#    By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 14:17:22 by nsamoilo          #+#    #+#              #
-#    Updated: 2022/07/11 16:40:04 by jheiskan         ###   ########.fr        #
+#    Updated: 2022/07/15 14:17:53 by nsamoilo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ INCL = -Iincludes/ -I$(LIB_DIR)/includes
 
 SRCS =	main.c char_array_manipulation.c parsing.c validation.c testing.c \
 sorting.c check_duplicates.c room.c search.c links_parsing.c linked_list.c \
-bfs.c links.c input_forks.c output_forks.c
+bfs.c links.c input_forks.c output_forks.c result.c
 
 OBJ_NAME = $(SRCS:.c=.o)
 

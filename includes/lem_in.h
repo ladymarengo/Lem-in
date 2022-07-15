@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/15 14:04:07 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:27:13 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,22 @@ typedef struct s_bfs
 
 typedef struct s_data
 {
+	int				ants;
 	int				number_of_rooms;
 	struct s_room	*rooms;
 	int				start;
 	int				end;
 	t_bfs			bfs;
 	t_list			*shortest_path;
+	struct s_path	*paths;
 }	t_data;
+
+typedef struct s_path
+{
+	int		ants;
+	int		length;
+	t_list	*path;
+}	t_path;
 
 bool	sort_array(char **arr, int size);
 bool	del_structure_array(t_array *array);
@@ -122,5 +131,6 @@ bool	combine_lists(t_list **list, t_list *add);
 bool	del_output_forks(t_data *data);
 void	print_paths(t_data *data);
 void	check_output(int room, t_data *data);
+int		count_turns(t_data *data);
 
 #endif
