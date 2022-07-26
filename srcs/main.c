@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/26 12:54:24 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:24:12 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,15 @@ bool	init_input_structure(t_input *input)
 bool	init_data_structure(t_data *data)
 {
 	data->ants = 0;
+	data->moves = MAX_INT;
 	data->number_of_rooms = 0;
 	data->rooms = NULL;
 	data->shortest_path = NULL;
 	data->paths = NULL;
 	data->bfs.queue = NULL;
 	data->bfs.visited = NULL;
+	data->bfs.parents = NULL;
+	data->bfs.path_lengths = NULL;
 	data->bfs.tmp = NULL;
 	return (true);
 }
@@ -96,6 +99,7 @@ int	main(int argc, char **argv)
 		{
 			print_connections(&data);
 			data.ants = (int) input.ants;
+			solve(&data);
 			// update_links(&data);
 			// del_input_forks(&data);
 			// del_output_forks(&data);

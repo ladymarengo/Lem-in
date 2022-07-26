@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/26 13:10:08 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:24:47 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,6 @@ typedef struct s_room
 	int				bfs_level;
 }	t_room;
 
-typedef struct s_bfs
-{
-	t_list			*queue;
-	bool			*visited;
-	int				current;
-	t_connection	**tmp_connections;
-	int				*tmp_capacity;
-	t_list			*tmp;
-	int				link;
-}	t_bfs;
-
 typedef enum e_connection
 {
 	NO_CONNECTION,
@@ -87,12 +76,33 @@ typedef enum e_connection
 	FLOW,
 }	t_connection;
 
+typedef struct s_bfs
+{
+	t_list			*queue;
+	bool			*visited;
+	int				*parents;
+	int				current;
+	t_connection	**tmp_connections;
+	int				*tmp_capacity;
+	int				*path_lengths;
+	t_list			*tmp;
+	int				link;
+}	t_bfs;
+
+typedef enum e_return
+{
+	FAIL,
+	NEW_PATH,
+	NO_PATH,
+}	t_return;
+
 typedef struct s_data
 {
 	int				ants;
 	int				number_of_rooms;
 	struct s_room	*rooms;
 	int				*capacity;
+	int				moves;
 	int				start;
 	int				end;
 	t_connection	**connections;
@@ -133,7 +143,6 @@ void	del_list(t_list *list);
 void	del_room(t_room *room);
 int		pop_first_node(t_list **a);
 void	print_bfs_levels(t_data *data);
-bool	bfs(t_data *data);
 bool	save_shortest_path(t_data *data);
 void	print_rooms_links(t_data *data);
 bool	update_links(t_data *data);
@@ -144,5 +153,6 @@ bool	del_output_forks(t_data *data);
 void	print_paths(t_data *data);
 void	check_output(int room, t_data *data);
 int		count_turns(t_data *data);
+bool	solve(t_data *data);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   testing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:16:21 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/26 12:52:58 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:23:09 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,8 @@ void	print_rooms_links(t_data *data)
 void	print_connections(t_data *data)
 {
 	int	x;
-	int y;
-	
+	int	y;
+
 	x = 0;
 	ft_printf("%6s", "");
 	while (x < data->number_of_rooms)
@@ -142,4 +142,5 @@ void	print_connections(t_data *data)
 		ft_printf("\n");
 		x++;
 	}
+	ft_printf("\n");
 }
