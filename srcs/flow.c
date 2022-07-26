@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 12:08:19 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/07/26 16:32:14 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/26 17:15:29 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,9 @@ t_return	bfs(t_data *data)
 		while (data->bfs.tmp)
 		{
 			data->bfs.link = data->bfs.tmp->room;
-			if (!data->bfs.visited[data->bfs.link] && data->bfs.tmp_connections[data->bfs.current][data->bfs.link] == NO_FLOW)
+			if (!data->bfs.visited[data->bfs.link] && data->bfs.tmp_connections[data->bfs.current][data->bfs.link] == NO_FLOW
+				&& (data->bfs.tmp_capacity[data->bfs.current] == 0 || data->bfs.tmp_connections[data->bfs.link][data->bfs.current] == FLOW
+				|| data->bfs.tmp_connections[data->bfs.current][data->bfs.parents[data->bfs.current]] == FLOW))
 			{
 				data->bfs.visited[data->bfs.link] = true;
 				data->bfs.parents[data->bfs.link] = data->bfs.current;
@@ -112,9 +114,12 @@ bool	better_moves(t_data *data)
 	int	new_moves;
 
 	new_moves = count_turns(data);
-	// if (new_moves < data->moves)
-	// 	return (true);
-	return (true);
+	if (new_moves < data->moves)
+	{
+		data->moves = new_moves;
+		return (true);
+	}
+	return (false);
 }
 
 void	update_connections(t_data *data)
@@ -124,10 +129,14 @@ void	update_connections(t_data *data)
 	current = data->end;
 	while (current != data->start)
 	{
+		
 		if (data->bfs.tmp_connections[current][data->bfs.parents[current]] == FLOW)
 			data->bfs.tmp_connections[current][data->bfs.parents[current]] = NO_FLOW;
 		else
+		{
 			data->bfs.tmp_connections[data->bfs.parents[current]][current] = FLOW;
+			data->bfs.tmp_capacity[current]++;
+		}
 		current = data->bfs.parents[current];
 	}
 }
@@ -154,7 +163,8 @@ bool	solve(t_data *data)
 			else
 				return (true);
 			ft_printf("Next try:\n");
-			// for (int i = 0; i < data->bfs.number_of_paths; i++)
+			// for (int i = 0; i < data->number_of_rooms; i++)
+			// 	ft_printf("Room %d capacity %d\n", i, data->capacity[i]);
 			// 	ft_printf("Path %d length %d\n", i, data->bfs.path_lengths[i]);
 			// print_connections(data);
 		}

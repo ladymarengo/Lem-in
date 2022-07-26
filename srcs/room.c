@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   room.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 15:52:05 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/26 12:58:51 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:51:39 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ bool	init_rooms(t_input *input, t_data *data)
 	i = 0;
 	while (i < data->number_of_rooms)
 	{
+		data->capacity[i] = 0;
 		data->connections[i] = (t_connection *)malloc(sizeof(t_connection) * data->number_of_rooms);
 		if (!data->connections[i])
 			return (false);
