@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/26 16:12:36 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/26 17:56:22 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,30 @@ typedef struct s_array
 	size_t	nb_of_elements;
 }	t_array;
 
-typedef struct s_room_array
-{
-	struct s_room	*rooms;
-	size_t			size;
-	size_t			nb_of_elements;
-}	t_room_array;
 
 typedef struct s_list
 {
 	int				room;
 	struct s_list	*next;
 }	t_list;
+
+typedef struct s_room
+{
+	char	*name;
+	bool	start;
+	bool	end;
+	t_list	*links;
+	t_list	*input;
+	t_list	*output;
+	int		bfs_level;
+}	t_room;
+
+typedef struct s_room_array
+{
+	t_room	*rooms;
+	size_t	size;
+	size_t	nb_of_elements;
+}	t_room_array;
 
 typedef struct s_input_flags
 {
@@ -49,25 +61,15 @@ typedef struct s_input_flags
 
 typedef struct s_input
 {
-	struct s_input_flags	flags;
-	struct s_array			rooms;
-	struct s_array			links;
-	long int				ants;
-	char					*line;
-	char					*start;
-	char					*end;
+	t_input_flags	flags;
+	t_array			rooms;
+	t_array			links;
+	long int		ants;
+	char			*line;
+	char			*start;
+	char			*end;
 }	t_input;
 
-typedef struct s_room
-{
-	char			*name;
-	bool			start;
-	bool			end;
-	struct s_list	*links;
-	struct s_list	*input;
-	struct s_list	*output;
-	int				bfs_level;
-}	t_room;
 
 typedef enum e_connection
 {
@@ -82,7 +84,7 @@ typedef struct s_bfs
 	bool			*visited;
 	int				*parents;
 	int				current;
-	t_connection	**tmp_connections;
+	t_connection	**new_conn;
 	int				*tmp_capacity;
 	int				*path_lengths;
 	int				number_of_paths;
@@ -97,11 +99,18 @@ typedef enum e_return
 	NO_PATH,
 }	t_return;
 
+typedef struct s_path
+{
+	int		ants;
+	int		length;
+	t_list	*path;
+}	t_path;
+
 typedef struct s_data
 {
 	int				ants;
 	int				number_of_rooms;
-	struct s_room	*rooms;
+	t_room			*rooms;
 	int				*capacity;
 	int				moves;
 	int				start;
@@ -109,15 +118,9 @@ typedef struct s_data
 	t_connection	**connections;
 	t_bfs			bfs;
 	t_list			*shortest_path;
-	struct s_path	*paths;
+	t_path			*paths;
 }	t_data;
 
-typedef struct s_path
-{
-	int		ants;
-	int		length;
-	t_list	*path;
-}	t_path;
 
 void	print_connections(t_data *data);
 bool	sort_array(char **arr, int size);
@@ -143,16 +146,9 @@ bool	print_list(t_list *list);
 void	del_list(t_list *list);
 void	del_room(t_room *room);
 int		pop_first_node(t_list **a);
-void	print_bfs_levels(t_data *data);
-bool	save_shortest_path(t_data *data);
 void	print_rooms_links(t_data *data);
-bool	update_links(t_data *data);
 void	del_elem(t_list **list, int elem);
-bool	del_input_forks(t_data *data);
-bool	combine_lists(t_list **list, t_list *add);
-bool	del_output_forks(t_data *data);
 void	print_paths(t_data *data);
-void	check_output(int room, t_data *data);
 int		count_turns(t_data *data);
 bool	solve(t_data *data);
 

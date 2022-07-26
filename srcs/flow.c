@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 12:08:19 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/07/26 17:15:29 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/26 17:38:08 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	copy_connection_and_capacity(t_data *data)
 		y = 0;
 		while (y < data->number_of_rooms)
 		{
-			data->connections[x][y] = data->bfs.tmp_connections[x][y];
+			data->connections[x][y] = data->bfs.new_conn[x][y];
 			y++;
 		}
 		x++;
@@ -37,22 +37,22 @@ bool	init_tmp_arrays(t_data *data)
 	int	y;
 
 	data->bfs.tmp_capacity = (int *)malloc(sizeof(int) * data->number_of_rooms);
-	data->bfs.tmp_connections = (t_connection **)malloc(sizeof(t_connection *) \
-		* data->number_of_rooms);
-	if (!data->bfs.tmp_capacity || !data->bfs.tmp_connections)
+	data->bfs.new_conn = \
+		(t_connection **)malloc(sizeof(t_connection *) * data->number_of_rooms);
+	if (!data->bfs.tmp_capacity || !data->bfs.new_conn)
 		return (false);
 	x = 0;
 	while (x < data->number_of_rooms)
 	{
 		data->bfs.tmp_capacity[x] = data->capacity[x];
-		data->bfs.tmp_connections[x] = (t_connection *) \
+		data->bfs.new_conn[x] = (t_connection *)
 			malloc(sizeof(t_connection) * data->number_of_rooms);
-		if (!data->bfs.tmp_connections[x])
+		if (!data->bfs.new_conn[x])
 			return (false);
 		y = 0;
 		while (y < data->number_of_rooms)
 		{
-			data->bfs.tmp_connections[x][y] = data->connections[x][y];
+			data->bfs.new_conn[x][y] = data->connections[x][y];
 			y++;
 		}
 		x++;
@@ -81,10 +81,21 @@ bool	init_bfs(t_data *data)
 	return (true);
 }
 
+bool	valid_path(t_data *data)
+{
+	if (data->bfs.visited[data->bfs.link]
+		|| data->bfs.new_conn[data->bfs.current][data->bfs.link] == FLOW)
+		return (false);
+	if (data->bfs.tmp_capacity[data->bfs.current] > 0
+		&& data->bfs.new_conn[data->bfs.link][data->bfs.current] == NO_FLOW
+		&& data->bfs.new_conn[data->bfs.current] \
+			[data->bfs.parents[data->bfs.current]] == NO_FLOW)
+		return (false);
+	return (true);
+}
+
 t_return	bfs(t_data *data)
 {
-	if (!init_bfs(data))
-		return (FAIL);
 	while (data->bfs.queue)
 	{
 		data->bfs.current = pop_first_node(&data->bfs.queue);
@@ -94,9 +105,7 @@ t_return	bfs(t_data *data)
 		while (data->bfs.tmp)
 		{
 			data->bfs.link = data->bfs.tmp->room;
-			if (!data->bfs.visited[data->bfs.link] && data->bfs.tmp_connections[data->bfs.current][data->bfs.link] == NO_FLOW
-				&& (data->bfs.tmp_capacity[data->bfs.current] == 0 || data->bfs.tmp_connections[data->bfs.link][data->bfs.current] == FLOW
-				|| data->bfs.tmp_connections[data->bfs.current][data->bfs.parents[data->bfs.current]] == FLOW))
+			if (valid_path(data))
 			{
 				data->bfs.visited[data->bfs.link] = true;
 				data->bfs.parents[data->bfs.link] = data->bfs.current;
@@ -109,9 +118,9 @@ t_return	bfs(t_data *data)
 	return (NO_PATH);
 }
 
-bool	better_moves(t_data *data)
+bool better_moves(t_data *data)
 {
-	int	new_moves;
+	int new_moves;
 
 	new_moves = count_turns(data);
 	if (new_moves < data->moves)
@@ -122,26 +131,25 @@ bool	better_moves(t_data *data)
 	return (false);
 }
 
-void	update_connections(t_data *data)
+void update_connections(t_data *data)
 {
-	int	current;
+	int room;
 
-	current = data->end;
-	while (current != data->start)
+	room = data->end;
+	while (room != data->start)
 	{
-		
-		if (data->bfs.tmp_connections[current][data->bfs.parents[current]] == FLOW)
-			data->bfs.tmp_connections[current][data->bfs.parents[current]] = NO_FLOW;
+		if (data->bfs.new_conn[room][data->bfs.parents[room]] == FLOW)
+			data->bfs.new_conn[room][data->bfs.parents[room]] = NO_FLOW;
 		else
 		{
-			data->bfs.tmp_connections[data->bfs.parents[current]][current] = FLOW;
-			data->bfs.tmp_capacity[current]++;
+			data->bfs.new_conn[data->bfs.parents[room]][room] = FLOW;
+			data->bfs.tmp_capacity[room]++;
 		}
-		current = data->bfs.parents[current];
+		room = data->bfs.parents[room];
 	}
 }
 
-bool	solve(t_data *data)
+bool solve(t_data *data)
 {
 	t_return	ret;
 
@@ -149,6 +157,8 @@ bool	solve(t_data *data)
 		return (false);
 	while (true)
 	{
+		if (!init_bfs(data))
+			return (false);
 		ret = bfs(data);
 		if (ret == FAIL)
 			return (false);
@@ -157,16 +167,11 @@ bool	solve(t_data *data)
 		else
 		{
 			update_connections(data);
-			// copy_connection_and_capacity(data);
 			if (better_moves(data))
 				copy_connection_and_capacity(data);
 			else
 				return (true);
 			ft_printf("Next try:\n");
-			// for (int i = 0; i < data->number_of_rooms; i++)
-			// 	ft_printf("Room %d capacity %d\n", i, data->capacity[i]);
-			// 	ft_printf("Path %d length %d\n", i, data->bfs.path_lengths[i]);
-			// print_connections(data);
 		}
 	}
 	return (false);

@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 14:50:40 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/07/15 14:06:54 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/26 17:38:21 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	count_output_forks(t_data *data, int room)
 {
 	int	output_forks;
-	
+
 	output_forks = 0;
 	while (room != data->start)
 	{
@@ -28,7 +28,7 @@ int	count_output_forks(t_data *data, int room)
 
 void	delete_extra_output(t_data *data, int room, int best)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = data->rooms[room].input;
 	while (tmp)

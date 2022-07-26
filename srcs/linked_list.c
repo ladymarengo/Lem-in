@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:43 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/15 13:49:31 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/26 17:55:44 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,18 +126,4 @@ int	pop_first_node(t_list **a)
 	free(*a);
 	*a = tmp;
 	return (number);
-}
-
-bool	combine_lists(t_list **list, t_list *add)
-{
-	t_list *tmp;
-
-	tmp = add;
-	while (tmp)
-	{
-		if (!add_to_end(list, tmp->room))
-			return (false);
-		tmp = tmp->next;
-	}
-	return (true);
 }

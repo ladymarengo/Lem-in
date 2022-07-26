@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 15:52:05 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/26 16:51:39 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/26 17:44:41 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,20 @@ bool	init_rooms(t_input *input, t_data *data)
 	data->number_of_rooms = input->rooms.nb_of_elements;
 	data->rooms = (t_room *)malloc(sizeof(t_room) * data->number_of_rooms);
 	data->capacity = (int *)malloc(sizeof(int) * data->number_of_rooms);
-	data->connections = (t_connection **)malloc(sizeof(t_connection *) * data->number_of_rooms);
+	data->connections = \
+		(t_connection **)malloc(sizeof(t_connection *) * data->number_of_rooms);
 	if (!data->rooms || !data->capacity || !data->connections)
 		return (false);
 	i = 0;
 	while (i < data->number_of_rooms)
 	{
 		data->capacity[i] = 0;
-		data->connections[i] = (t_connection *)malloc(sizeof(t_connection) * data->number_of_rooms);
+		data->connections[i] = (t_connection *)malloc(sizeof(t_connection) \
+			* data->number_of_rooms);
 		if (!data->connections[i])
 			return (false);
-		ft_bzero(data->connections[i], sizeof(t_connection) * data->number_of_rooms);
+		ft_bzero(data->connections[i], sizeof(t_connection) \
+			* data->number_of_rooms);
 		i++;
 	}
 	return (true);

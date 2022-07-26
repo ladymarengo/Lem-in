@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/26 17:12:02 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/26 17:40:42 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,26 +95,12 @@ int	main(int argc, char **argv)
 	if (!read_input(&input, fd) || !make_rooms(&input, &data))
 		ft_printf("ERROR\n");
 	else
-		// print_list(data.shortest_path);
-		{
-			data.ants = (int) input.ants;
-			solve(&data);
-			// print_connections(&data);
-			
-			// update_links(&data);
-			// del_input_forks(&data);
-			// del_output_forks(&data);
-			// print_rooms_links(&data);
-			// print_paths(&data);
-			// count_turns(&data);
-		}
-		
+	{
+		data.ants = (int) input.ants;
+		solve(&data);
+	}
 	if (fd != 0)
 		close(fd);
-	//print_rooms_links(&data);
-	// print_elements(&(input.rooms));
-	// print_elements(&(input.links));
-	// ft_printf("Start: %s\nEnd: %s\n", input.start, input.end);
 	clean_up(&input, &data);
 	return (0);
 }
