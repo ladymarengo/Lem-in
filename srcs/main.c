@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/15 14:46:49 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/26 12:54:24 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	clean_up(t_input *input, t_data *data)
 	while (data->number_of_rooms-- > 0)
 		del_room(&data->rooms[data->number_of_rooms]);
 	free(data->rooms);
+	free(data->capacity);
 	del_list(data->shortest_path);
 	del_list(data->bfs.queue);
 	if (data->bfs.visited)
@@ -88,19 +89,19 @@ int	main(int argc, char **argv)
 		fd = open(argv[1], O_RDONLY);
 	else
 		fd = 0;
-	if (!read_input(&input, fd) || !make_rooms(&input, &data) || !bfs(&data)
-		|| !save_shortest_path(&data))
+	if (!read_input(&input, fd) || !make_rooms(&input, &data))
 		ft_printf("ERROR\n");
 	else
 		// print_list(data.shortest_path);
 		{
+			print_connections(&data);
 			data.ants = (int) input.ants;
-			update_links(&data);
-			del_input_forks(&data);
-			del_output_forks(&data);
+			// update_links(&data);
+			// del_input_forks(&data);
+			// del_output_forks(&data);
 			// print_rooms_links(&data);
-			print_paths(&data);
-			count_turns(&data);
+			// print_paths(&data);
+			// count_turns(&data);
 		}
 		
 	if (fd != 0)

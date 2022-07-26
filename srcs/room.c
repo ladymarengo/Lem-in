@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 15:52:05 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/22 12:10:54 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/07/26 12:58:51 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,23 @@ void	del_room(t_room *room)
 
 bool	init_rooms(t_input *input, t_data *data)
 {
+	int	i;
+
 	data->number_of_rooms = input->rooms.nb_of_elements;
 	data->rooms = (t_room *)malloc(sizeof(t_room) * data->number_of_rooms);
-	if (!data->rooms)
+	data->capacity = (int *)malloc(sizeof(int) * data->number_of_rooms);
+	data->connections = (t_connection **)malloc(sizeof(t_connection *) * data->number_of_rooms);
+	if (!data->rooms || !data->capacity || !data->connections)
 		return (false);
+	i = 0;
+	while (i < data->number_of_rooms)
+	{
+		data->connections[i] = (t_connection *)malloc(sizeof(t_connection) * data->number_of_rooms);
+		if (!data->connections[i])
+			return (false);
+		ft_bzero(data->connections[i], sizeof(t_connection) * data->number_of_rooms);
+		i++;
+	}
 	return (true);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:16:21 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/15 12:13:44 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/07/26 12:52:58 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,35 @@ void	print_rooms_links(t_data *data)
 			tmp = tmp->next;
 		}
 		// i++;
+	}
+}
+
+void	print_connections(t_data *data)
+{
+	int	x;
+	int y;
+	
+	x = 0;
+	ft_printf("%6s", "");
+	while (x < data->number_of_rooms)
+		ft_printf("%6s", data->rooms[x++].name);
+	ft_printf("\n");
+	x = 0;
+	while (x < data->number_of_rooms)
+	{
+		y = 0;
+		ft_printf("%6s", data->rooms[x].name);
+		while (y < data->number_of_rooms)
+		{
+			if (data->connections[x][y] == NO_CONNECTION)
+				ft_printf("%6s", "");
+			else if (data->connections[x][y] == NO_FLOW)
+				ft_printf("%6s", ".");
+			else
+				ft_printf("%6s", "*");
+			y++;
+		}
+		ft_printf("\n");
+		x++;
 	}
 }

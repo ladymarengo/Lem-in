@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/15 14:27:13 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/26 13:10:08 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,20 +71,31 @@ typedef struct s_room
 
 typedef struct s_bfs
 {
-	t_list	*queue;
-	bool	*visited;
-	int		current;
-	t_list	*tmp;
-	int		link;
+	t_list			*queue;
+	bool			*visited;
+	int				current;
+	t_connection	**tmp_connections;
+	int				*tmp_capacity;
+	t_list			*tmp;
+	int				link;
 }	t_bfs;
+
+typedef enum e_connection
+{
+	NO_CONNECTION,
+	NO_FLOW,
+	FLOW,
+}	t_connection;
 
 typedef struct s_data
 {
 	int				ants;
 	int				number_of_rooms;
 	struct s_room	*rooms;
+	int				*capacity;
 	int				start;
 	int				end;
+	t_connection	**connections;
 	t_bfs			bfs;
 	t_list			*shortest_path;
 	struct s_path	*paths;
@@ -97,6 +108,7 @@ typedef struct s_path
 	t_list	*path;
 }	t_path;
 
+void	print_connections(t_data *data);
 bool	sort_array(char **arr, int size);
 bool	del_structure_array(t_array *array);
 void	del_array(char **array, size_t size);
