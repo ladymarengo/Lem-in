@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/26 15:24:47 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:12:36 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_bfs
 	t_connection	**tmp_connections;
 	int				*tmp_capacity;
 	int				*path_lengths;
+	int				number_of_paths;
 	t_list			*tmp;
 	int				link;
 }	t_bfs;

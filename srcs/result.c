@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 14:13:46 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/26 15:25:06 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:38:45 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	count_paths(t_data *data)
 // 	}
 // }
 
-int	lengths_sum(t_path *paths, int current)
+int	lengths_sum(int	*paths, int current)
 {
 	int	sum;
 	int	i;
@@ -98,7 +98,7 @@ int	lengths_sum(t_path *paths, int current)
 	sum = 0;
 	while (i < current)
 	{
-		sum += paths[current].length - paths[i].length;
+		sum += paths[current] - paths[i];
 		i++;
 	}
 	return (sum);
@@ -124,8 +124,8 @@ bool	save_paths_lengths(t_data *data, int number_of_paths)
 			number_of_paths--;
 			while (path != data->end)
 			{
-				links = data->rooms[tmp->room].links;
-				while (data->connections[path][links->room] != FLOW)
+				links = data->rooms[path].links;
+				while (data->bfs.tmp_connections[path][links->room] != FLOW)
 					links = links->next;
 				length++;
 				path = links->room;
@@ -137,39 +137,68 @@ bool	save_paths_lengths(t_data *data, int number_of_paths)
 	return (true);
 }
 
-// void	sort_paths_lengths(t_data *data, int number_of_paths)
-// {
-	
-// }
+void	sort_paths_lengths(t_data *data, int number_of_paths)
+{
+	int	first;
+	int	second;
+	int	tmp;
+
+	first = 0;
+	while (first < number_of_paths - 1)
+	{
+		second = 0;
+		while (second < number_of_paths - first - 1)
+		{
+			if (data->bfs.path_lengths[second] > data->bfs.path_lengths[second + 1])
+			{
+				tmp = data->bfs.path_lengths[second];
+				data->bfs.path_lengths[second] = data->bfs.path_lengths[second + 1];
+				data->bfs.path_lengths[second + 1] = tmp;
+			}
+			second++;
+		}
+		first++;
+	}
+}
 
 int	count_turns(t_data *data)
 {
 	int	paths;
-	// int	ant;
-	// int	path;
+	int	ant;
+	int	path;
+	int	*ants;
+	int	moves;
 
 	paths = count_paths(data);
+	data->bfs.number_of_paths = paths;
 	save_paths_lengths(data, paths);
-	// sort_paths_lengths(data, paths);
-	// // ft_printf("\nAfter sorting:\n");
-	// for (int i = 0; i < paths; i++)
-	// 	ft_printf("Path %d length %d\n", i, data->paths[i].length);
-	// ant = 0;
-	// while (ant < data->ants)
-	// {
-	// 	path = 0;
-	// 	while (path < paths)
-	// 	{
-	// 		// ft_printf("sum %d\n", lengths_sum(data->paths, path));
-	// 		if (data->ants - ant > lengths_sum(data->paths, path))
-	// 		{
-	// 			data->paths[path].ants++;
-	// 			ant++;
-	// 		}
-	// 		path++;
-	// 	}
-	// }
-	// for (int i = 0; i < paths; i++)
-	// 	ft_printf("\nPath %d ants %d\n", i, data->paths[i].ants);
-	return (0);
+	sort_paths_lengths(data, paths);
+	ants = (int *)malloc(sizeof(int) * paths);
+	ft_bzero(ants, sizeof(int) * paths);
+
+	ant = 0;
+	while (ant < data->ants)
+	{
+		path = 0;
+		while (path < paths)
+		{
+			// ft_printf("sum %d\n", lengths_sum(data->paths, path));
+			if (data->ants - ant > lengths_sum(data->bfs.path_lengths, path))
+			{
+				ants[path]++;
+				ant++;
+			}
+			path++;
+		}
+	}
+	for (int i = 0; i < paths; i++)
+		ft_printf("\nPath %d length %d ants %d\n", i, data->bfs.path_lengths[i], ants[i]);
+	moves = 0;
+	for (int i = 0; i < paths; i++)
+	{
+		if (moves < data->bfs.path_lengths[i] + ants[i] - 1)
+			moves = data->bfs.path_lengths[i] + ants[i] - 1;
+	}
+	ft_printf("Moves: %d\n", moves);
+	return (moves);
 }

@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 12:08:19 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/07/26 15:58:27 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:32:14 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,9 @@ bool	better_moves(t_data *data)
 	int	new_moves;
 
 	new_moves = count_turns(data);
-	if (new_moves < data->moves)
-		return (true);
-	return (false);
+	// if (new_moves < data->moves)
+	// 	return (true);
+	return (true);
 }
 
 void	update_connections(t_data *data)
@@ -148,12 +148,15 @@ bool	solve(t_data *data)
 		else
 		{
 			update_connections(data);
-			copy_connection_and_capacity(data);
-			print_connections(data);
-			// if (better_moves(data))
-			// 	copy_connection_and_capacity(data);
-			// else
-			// 	return (true);
+			// copy_connection_and_capacity(data);
+			if (better_moves(data))
+				copy_connection_and_capacity(data);
+			else
+				return (true);
+			ft_printf("Next try:\n");
+			// for (int i = 0; i < data->bfs.number_of_paths; i++)
+			// 	ft_printf("Path %d length %d\n", i, data->bfs.path_lengths[i]);
+			// print_connections(data);
 		}
 	}
 	return (false);

@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/26 15:24:12 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:45:55 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,10 @@ int	main(int argc, char **argv)
 	else
 		// print_list(data.shortest_path);
 		{
-			print_connections(&data);
 			data.ants = (int) input.ants;
 			solve(&data);
+			print_connections(&data);
+			
 			// update_links(&data);
 			// del_input_forks(&data);
 			// del_output_forks(&data);
