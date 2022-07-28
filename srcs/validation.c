@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:38:07 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/28 14:07:09 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/28 14:18:46 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void	handle_start_end(t_input *input)
 	input->flags.next_e = false;
 }
 
-bool	check_input(t_input *inp, int fd)
+bool	check_input(t_input *inp)
 {
-	while (get_next_line(fd, &(inp->line)) > 0)
+	while (get_next_line(inp->fd, &(inp->line)) > 0)
 	{
 		if (!add_element(&(inp->map), inp->line))
 			return (false);

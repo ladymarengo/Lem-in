@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 11:18:08 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/07/28 14:12:12 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/28 14:28:06 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ bool	print_result(t_data *data, t_input *input)
 		}
 		i = 0;
 		moving = false;
-		if (true) // need to add flag handling
+		if (data->print_lines)
 			ft_printf("%3d: ", line_number++);
 		while (i < nb_of_ants)
 		{
@@ -153,10 +153,8 @@ bool	print_result(t_data *data, t_input *input)
 		}
 		if (moving)
 			ft_printf("\n");
-		else if (true)
+		else if (data->print_lines)
 			ft_printf("END\n");
 	}
-	//Print map here
-
 	return (true);
 }

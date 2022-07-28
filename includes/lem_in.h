@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/28 14:04:20 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/28 14:41:06 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include <stdbool.h>
 
 # define MAX_INT 2147483647
+# define USAGE "Usage:\n./lem-in < map_name\nAdditional flags:\n-file: \
+	uses the file from the next argument\n-lines: prints line numbers for \
+	the moves\n-paths: prints used paths\n"
 
 typedef struct s_array
 {
@@ -60,6 +63,7 @@ typedef struct s_input_flags
 
 typedef struct s_input
 {
+	int				fd;
 	t_input_flags	flags;
 	t_array			rooms;
 	t_array			links;
@@ -120,8 +124,9 @@ typedef struct s_data
 	t_list			*shortest_path;
 	t_path			*paths;
 	int				number_of_paths;
+	bool			print_lines;
+	bool			print_paths;
 }	t_data;
-
 
 void	print_connections(t_data *data);
 bool	sort_array(char **arr, int size);
@@ -132,7 +137,7 @@ bool	init_struct_array(t_array *new);
 bool	add_element(t_array *array, char *element);
 void	print_elements(t_array *array);
 bool	check_ants(char *line, long int *ants);
-bool	check_input(t_input *input, int fd);
+bool	check_input(t_input *input);
 bool	post_input_check(t_input *input);
 bool	no_dups(t_array *rooms);
 bool	handle_commands(t_input_flags *flags, char *line);
