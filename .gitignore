@@ -3,3 +3,4 @@ lem-in
 objs/
 libft/*.o
 libft/libft.a
+visualizer/target
