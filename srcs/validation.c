@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:38:07 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/11 14:24:16 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/07/28 14:07:09 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ bool	check_input(t_input *inp, int fd)
 {
 	while (get_next_line(fd, &(inp->line)) > 0)
 	{
+		if (!add_element(&(inp->map), inp->line))
+			return (false);
 		if (!ft_strcmp("##start", inp->line) || !ft_strcmp("##end", inp->line))
 		{
 			if (!handle_commands(&(inp->flags), inp->line))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flow.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 12:08:19 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/07/28 11:36:03 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/07/28 14:09:31 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ bool solve(t_data *data)
 				copy_connection_and_capacity(data);
 			else
 				return (true);
-			ft_printf("Next try:\n");
+			// ft_printf("Next try:\n");
 		}
 	}
 	return (false);

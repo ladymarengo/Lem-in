@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moves.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 14:13:46 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/28 13:03:08 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/07/28 14:10:24 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,14 +130,14 @@ int	count_turns(t_data *data)
 			path++;
 		}
 	}
-	for (int i = 0; i < paths; i++)
-		ft_printf("\nPath %d length %d ants %d\n", i, data->bfs.path_lengths[i], ants[i]);
+	// for (int i = 0; i < paths; i++)
+	// 	ft_printf("\nPath %d length %d ants %d\n", i, data->bfs.path_lengths[i], ants[i]);
 	moves = 0;
 	for (int i = 0; i < paths; i++)
 	{
 		if (moves < data->bfs.path_lengths[i] + ants[i] - 1)
 			moves = data->bfs.path_lengths[i] + ants[i] - 1;
 	}
-	ft_printf("Moves: %d\n", moves);
+	// ft_printf("Moves: %d\n", moves);
 	return (moves);
 }
