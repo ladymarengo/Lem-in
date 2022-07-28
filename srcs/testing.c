@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   testing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:16:21 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/26 15:23:09 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/28 12:12:37 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void	print_paths(t_data *data)
+{
+	t_list *tmp;
+	int		i;
+
+	i = 0;
+	ft_printf("\nPrinting paths\n");
+	while (i < data->number_of_paths)
+	{
+		tmp = data->paths[i].path;
+		ft_printf("Path %d (length %d): ", i, data->paths[i].length);
+		while (tmp)
+		{
+			ft_printf("%d ", tmp->room);
+			tmp = tmp->next;
+		}
+		ft_printf("\n");
+		i++;
+	}
+}
 
 bool	print_list(t_list *list)
 {
@@ -24,34 +45,6 @@ bool	print_list(t_list *list)
 		list = tmp;
 	}
 	return (false);
-}
-
-bool	print_path(t_data *data, int room)
-{
-	t_list *tmp;
-
-	tmp = data->rooms[room].output;
-	ft_printf("\nPrinting path\n%s - %s", data->rooms[data->start].name, data->rooms[room].name);
-	while (tmp && tmp->room != data->end)
-	{
-		ft_printf(" - %s", data->rooms[tmp->room].name);
-		tmp = data->rooms[tmp->room].output;
-	}
-	ft_printf(" - %s\n", data->rooms[data->end].name);
-	return (false);
-}
-
-void	print_paths(t_data *data)
-{
-	t_list *tmp;
-
-	tmp = data->rooms[data->start].output;
-
-	while (tmp)
-	{
-		print_path(data, tmp->room);
-		tmp = tmp->next;
-	}
 }
 
 void	print_elements(t_array *array)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/26 17:56:22 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/28 12:47:21 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ typedef struct s_array
 	size_t	size;
 	size_t	nb_of_elements;
 }	t_array;
-
 
 typedef struct s_list
 {
@@ -119,6 +118,7 @@ typedef struct s_data
 	t_bfs			bfs;
 	t_list			*shortest_path;
 	t_path			*paths;
+	int				number_of_paths;
 }	t_data;
 
 
@@ -151,5 +151,6 @@ void	del_elem(t_list **list, int elem);
 void	print_paths(t_data *data);
 int		count_turns(t_data *data);
 bool	solve(t_data *data);
+bool	print_result(t_data *data, t_input *input);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/26 17:40:42 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/28 12:32:17 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ bool	init_data_structure(t_data *data)
 	data->bfs.parents = NULL;
 	data->bfs.path_lengths = NULL;
 	data->bfs.tmp = NULL;
+	data->number_of_paths = 0;
 	return (true);
 }
 
@@ -98,6 +99,8 @@ int	main(int argc, char **argv)
 	{
 		data.ants = (int) input.ants;
 		solve(&data);
+		//print_connections(&data);
+		print_result(&data, &input);
 	}
 	if (fd != 0)
 		close(fd);

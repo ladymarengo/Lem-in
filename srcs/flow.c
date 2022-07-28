@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flow.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 12:08:19 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/07/26 17:38:08 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/28 11:36:03 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	copy_connection_and_capacity(t_data *data)
 		}
 		x++;
 	}
+	data->number_of_paths = data->bfs.number_of_paths;
 }
 
 bool	init_tmp_arrays(t_data *data)
