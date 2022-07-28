@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/28 14:43:33 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/28 15:05:13 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ void	clean_up(t_input *input, t_data *data)
 	del_list(data->bfs.queue);
 	if (data->bfs.visited)
 		free(data->bfs.visited);
+	if (input->fd != 0)
+		close(input->fd);
 }
 
 void	cleanup_and_exit(t_input *input, t_data *data, int ret, char *message)
 {
-	ft_printf("%s\n", message);
+	ft_printf("%s", message);
 	clean_up(input, data);
 	exit(ret);
 }
@@ -97,14 +99,22 @@ void	handle_args(t_data *data, t_input *input, char **argv, int argc)
 	i = 1;
 	while (i < argc)
 	{
-		if (ft_strcmp(argv[i], "-file") == 0 && i + 1 < argc)
-			input->fd = open(argv[i + 1], O_RDONLY);
+		if (ft_strcmp(argv[i], "-file") == 0)
+		{
+			if (i + 1 < argc)
+				input->fd = open(argv[i++ + 1], O_RDONLY);
+			else
+				cleanup_and_exit(input, data, 0, USAGE);
+			if (input->fd < 0)
+				cleanup_and_exit(input, data, 0, "Can't open file\n");
+		}
 		else if (ft_strcmp(argv[i], "-lines") == 0)
 			data->print_lines = true;
 		else if (ft_strcmp(argv[i], "-paths") == 0)
 			data->print_paths = true;
 		else if (ft_strcmp(argv[i], "-help") == 0)
 			cleanup_and_exit(input, data, 0, USAGE);
+		i++;
 	}
 }
 
@@ -118,12 +128,8 @@ int	main(int argc, char **argv)
 		cleanup_and_exit(&input, &data, -1, "Malloc error");
 	if (argc != 1)
 		handle_args(&data, &input, argv, argc);
-	// if (argc != 1)
-	// 	fd = open(argv[1], O_RDONLY);
-	// else
-	// 	fd = 0;
 	if (!read_input(&input) || !make_rooms(&input, &data))
-		ft_printf("ERROR\n");
+		cleanup_and_exit(&input, &data, -1, "ERROR\n");
 	else
 	{
 		data.ants = (int) input.ants;
@@ -131,8 +137,6 @@ int	main(int argc, char **argv)
 		//print_connections(&data);
 		print_result(&data, &input);
 	}
-	// if (fd != 0)
-	// 	close(fd);
 	clean_up(&input, &data);
 	return (0);
 }

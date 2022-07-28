@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   testing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:16:21 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/28 14:12:45 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/28 15:10:20 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_paths(t_data *data)
 	int		i;
 
 	i = 0;
-	ft_printf("\nPrinting paths\n");
+	ft_printf("Printing paths\n");
 	while (i < data->number_of_paths)
 	{
 		tmp = data->paths[i].path;
@@ -31,6 +31,7 @@ void	print_paths(t_data *data)
 		ft_printf("\n");
 		i++;
 	}
+	ft_putendl("");
 }
 
 bool	print_list(t_list *list)
@@ -101,7 +102,6 @@ void	print_rooms_links(t_data *data)
 			ft_printf("%s\n", data->rooms[tmp->room].name);
 			tmp = tmp->next;
 		}
-		// i++;
 	}
 }
 

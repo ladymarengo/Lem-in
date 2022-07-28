@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   result.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 11:18:08 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/07/28 14:28:06 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/28 15:06:42 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,12 @@ bool	print_result(t_data *data, t_input *input)
 		return (false);
 	save_paths(data);
 	sort_paths(data);
-	// print_paths(data);
 	ants = (t_list **)malloc(sizeof(t_list *) * data->ants);
 	if (!ants)
 		return (false);
 	print_elements(&(input->map));
+	if (data->print_paths)
+		print_paths(data);
 	nb_of_ants = 0;
 	moving = true;
 	line_number = 1;

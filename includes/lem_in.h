@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/28 14:41:06 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/07/28 14:54:08 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 # define MAX_INT 2147483647
 # define USAGE "Usage:\n./lem-in < map_name\nAdditional flags:\n-file: \
-	uses the file from the next argument\n-lines: prints line numbers for \
-	the moves\n-paths: prints used paths\n"
+uses the file from the next argument\n-lines: prints line numbers for \
+the moves\n-paths: prints used paths\n"
 
 typedef struct s_array
 {
@@ -73,7 +73,6 @@ typedef struct s_input
 	char			*start;
 	char			*end;
 }	t_input;
-
 
 typedef enum e_connection
 {
