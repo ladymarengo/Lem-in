@@ -171,7 +171,7 @@ fn render(
 					OFFSET + y_offset * (room.coordinates.1 - map.borders.bottom) as f32 - HEIGHT / 2.0,
 					0.0
 				),
-				rotation: Quat::from_rotation_z(90.0),
+				rotation: Quat::from_rotation_z(1.5708),
 				..Default::default()
 			},
             ..default()
