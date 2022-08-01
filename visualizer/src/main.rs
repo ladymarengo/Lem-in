@@ -6,7 +6,7 @@ use std::{
 };
 
 use bevy::{prelude::*, sprite::MaterialMesh2dBundle};
-use bevy_prototype_lyon::prelude::*;
+use fdg_sim::{ForceGraph, ForceGraphHelper, Simulation, SimulationParameters, petgraph::graph::NodeIndex};
 const WIDTH: f32 = 900.0;
 const HEIGHT: f32 = 600.0;
 const OFFSET: f32 = 20.0;
@@ -29,8 +29,9 @@ struct Room {
     room_type: RoomType,
     links: Vec<String>,
     on_path: bool,
+    node_index: Option<NodeIndex>,
 }
-#[derive(Debug, Default)]
+#[derive(Debug, Default, PartialEq)]
 enum RoomType {
     #[default]
     Start,
@@ -119,6 +120,7 @@ fn parse(mut commands: Commands, mut data: ResMut<Map>) {
                     room_type,
                     links: Vec::new(),
                     on_path: false,
+                    node_index: None,
                 },
             );
         }
@@ -127,10 +129,52 @@ fn parse(mut commands: Commands, mut data: ResMut<Map>) {
         let ant_moves: Vec<&str> = line.split(" ").collect();
         for ant_move in ant_moves {
             let (ant, room) = ant_move.split_once("-").unwrap();
+            data.rooms.get_mut(room).unwrap().on_path = true;
             data.ants[ant[1..].parse::<usize>().unwrap() - 1].position[i] = room.to_string();
         }
     }
-    println!("{:?}", data.borders);
+    // println!("{:?}", data.borders);
+    // for room in &data.rooms {
+    //     println!("{} {} {}", room.0, room.1.coordinates.0, room.1.coordinates.1);
+    // }
+
+    let mut graph: ForceGraph<(), ()> = ForceGraph::default();
+
+    for room in &mut data.rooms {
+        room.1.node_index = Some(graph.add_force_node(room.0, ()));
+    }
+
+    for room in &data.rooms {
+        for neighbour in &room.1.links {
+            
+            graph.add_edge(room.1.node_index.unwrap(), data.rooms[neighbour].node_index.unwrap(), ());
+        }
+    }
+
+    // create a simulation from the graph
+    let mut simulation = Simulation::from_graph(&graph, SimulationParameters::default());
+
+    // your event/render loop
+    for frame in 0..1000 {
+        // update the nodes positions based on force algorithm
+        simulation.update(0.035);
+    }
+
+    println!("After simulation:");
+    for node in simulation.get_graph().node_weights() {
+        data.rooms.get_mut(&node.name).unwrap().coordinates = (node.location.x as i32, node.location.y as i32);
+        let x = node.location.x as i32;
+        let y = node.location.y as i32;
+        data.borders.left = min(data.borders.left, x);
+        data.borders.right = max(data.borders.right, x);
+        data.borders.bottom = min(data.borders.bottom, y);
+        data.borders.top = max(data.borders.top, y);
+        // println!("\"{}\" - {:?}", node.name, node.location);
+    }
+    // for room in &data.rooms {
+    //     println!("{} {} {}", room.0, room.1.coordinates.0, room.1.coordinates.1);
+    // }
+
 }
 
 fn render(
@@ -145,8 +189,8 @@ fn render(
     for room in map.rooms.values() {
         commands.spawn_bundle(SpriteBundle {
             sprite: Sprite {
-                color: Color::rgb(0.25, 0.25, 0.75),
-                custom_size: Some(Vec2::new(40.0, 5.0)),
+                color: if room.room_type == RoomType::Start {Color::GREEN} else if room.room_type == RoomType::End {Color::BLACK} else if room.on_path {Color::RED} else {Color::BLUE},
+                custom_size: Some(Vec2::new(2.0, 2.0)),
                 ..default()
             },
 			transform: Transform {
@@ -159,23 +203,23 @@ fn render(
 			},
             ..default()
         }).insert(RoomComponent);
-		commands.spawn_bundle(SpriteBundle {
-            sprite: Sprite {
-                color: Color::rgb(0.50, 0.25, 0.25),
-                custom_size: Some(Vec2::new(40.0, 5.0)),
-                ..default()
-            },
-			transform: Transform {
-				translation: Vec3::new(
-					OFFSET + x_offset * (room.coordinates.0 - map.borders.left) as f32 - WIDTH / 2.0,
-					OFFSET + y_offset * (room.coordinates.1 - map.borders.bottom) as f32 - HEIGHT / 2.0,
-					0.0
-				),
-				rotation: Quat::from_rotation_z(1.5708),
-				..Default::default()
-			},
-            ..default()
-        }).insert(RoomComponent);
+		// commands.spawn_bundle(SpriteBundle {
+        //     sprite: Sprite {
+        //         color: Color::rgb(0.50, 0.25, 0.25),
+        //         custom_size: Some(Vec2::new(5.0, 5.0)),
+        //         ..default()
+        //     },
+		// 	transform: Transform {
+		// 		translation: Vec3::new(
+		// 			OFFSET + x_offset * (room.coordinates.0 - map.borders.left) as f32 - WIDTH / 2.0,
+		// 			OFFSET + y_offset * (room.coordinates.1 - map.borders.bottom) as f32 - HEIGHT / 2.0,
+		// 			0.0
+		// 		),
+		// 		rotation: Quat::from_rotation_z(1.5),
+		// 		..Default::default()
+		// 	},
+        //     ..default()
+        // }).insert(RoomComponent);
     }
 }
 
