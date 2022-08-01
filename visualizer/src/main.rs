@@ -43,6 +43,9 @@ struct Ant {
     position: Vec<String>,
 }
 
+#[derive(Component)]
+struct RoomComponent;
+
 fn main() {
     App::new()
         .insert_resource(WindowDescriptor {
@@ -143,7 +146,7 @@ fn render(
         commands.spawn_bundle(SpriteBundle {
             sprite: Sprite {
                 color: Color::rgb(0.25, 0.25, 0.75),
-                custom_size: Some(Vec2::new(5.0, 5.0)),
+                custom_size: Some(Vec2::new(40.0, 5.0)),
                 ..default()
             },
 			transform: Transform {
@@ -155,8 +158,32 @@ fn render(
 				..Default::default()
 			},
             ..default()
-        });
+        }).insert(RoomComponent);
+		commands.spawn_bundle(SpriteBundle {
+            sprite: Sprite {
+                color: Color::rgb(0.50, 0.25, 0.25),
+                custom_size: Some(Vec2::new(40.0, 5.0)),
+                ..default()
+            },
+			transform: Transform {
+				translation: Vec3::new(
+					OFFSET + x_offset * (room.coordinates.0 - map.borders.left) as f32 - WIDTH / 2.0,
+					OFFSET + y_offset * (room.coordinates.1 - map.borders.bottom) as f32 - HEIGHT / 2.0,
+					0.0
+				),
+				rotation: Quat::from_rotation_z(90.0),
+				..Default::default()
+			},
+            ..default()
+        }).insert(RoomComponent);
     }
+}
+
+fn rotate(mut rooms: Query<&mut Transform, With<RoomComponent>>){
+	// for mut room in rooms.iter_mut(){
+	// 	room.rotate_around(point, rotation)
+	// }
+
 }
 
 fn spawn_camera(mut commands: Commands) {
