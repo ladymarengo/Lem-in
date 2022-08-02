@@ -81,9 +81,9 @@ fn parse() {
     let mut simulation = Simulation::from_graph(&graph, SimulationParameters::default());
 
     // your event/render loop
-    for frame in 0..100 {
+    for frame in 0..500 {
         // update the nodes positions based on force algorithm
-		println!("Progress: {frame}");
+		// println!("Progress: {frame}");
         simulation.update(0.035);
     }
 
