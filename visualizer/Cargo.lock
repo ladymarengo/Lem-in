@@ -1879,6 +1879,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7fc7aa29613bd6a620df431842069224d8bc9011086b1db4c0e0cd47fa03ec9a"
 
 [[package]]
+name = "libm"
+version = "0.2.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "da83a57f3f5ba3680950aa3cbc806fc297bc0b289d42e8942ed528ace71b8145"
+
+[[package]]
 name = "libudev-sys"
 version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2854,7 +2860,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7b0dc6d20ce137f302edf90f9cd3d278866fd7fb139efca6f246161222ad6d87"
 dependencies = [
  "lazy_static",
- "libm",
+ "libm 0.1.4",
 ]
 
 [[package]]
@@ -3085,6 +3091,8 @@ dependencies = [
  "bevy",
  "bevy_prototype_lyon",
  "fdg-sim",
+ "libm 0.2.3",
+ "regex",
 ]
 
 [[package]]

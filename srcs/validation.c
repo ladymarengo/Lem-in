@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:38:07 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/28 14:18:46 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/08/02 13:36:48 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ bool	is_room_valid(char *line)
 		i++;
 	if (!line[i++])
 		return (false);
+	if (line[i] == '-')
+		i++;
 	while (line[i] != ' ')
 	{
 		if (!line[i] || line[i] < '0' || line[i] > '9')
@@ -32,6 +34,8 @@ bool	is_room_valid(char *line)
 	i++;
 	if (!line[i])
 		return (false);
+	if (line[i] == '-')
+		i++;
 	while (line[i])
 	{
 		if (line[i] < '0' || line[i] > '9')
