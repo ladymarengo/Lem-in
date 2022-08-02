@@ -16,6 +16,7 @@ struct Map {
     rooms: HashMap<String, Room>,
     ants: Vec<Ant>,
     borders: Borders,
+	paths: Vec<String>,
 }
 #[derive(Debug)]
 struct Borders {
@@ -59,7 +60,7 @@ fn main() {
             height: HEIGHT,
             ..Default::default()
         })
-        .insert_resource(ClearColor(Color::hsl(26.0, 0.32, 0.73)))
+        .insert_resource(ClearColor(Color::BLACK))
         .insert_resource(Map {
             rooms: HashMap::new(),
             ants: Vec::new(),
@@ -69,6 +70,7 @@ fn main() {
                 top: i32::MIN,
                 bottom: i32::MAX,
             },
+			paths: Vec::new(),
         })
         .add_plugins(DefaultPlugins)
         .add_system(bevy::input::system::exit_on_esc_system)
@@ -82,7 +84,10 @@ fn parse(mut commands: Commands, mut data: ResMut<Map>) {
     let args: Vec<String> = env::args().collect();
     let file = &args[1];
     let input = read_to_string(file).unwrap();
-    let (map, moves) = input.split_once("\n\n").unwrap();
+    let parts: Vec<&str> = input.split("\n\n").collect();
+	let map = parts[0];
+	data.paths = parts[1].lines().map(|l|l.to_string()).collect();
+	let moves = parts[2];
     let map_iter = map.lines().collect::<Vec<&str>>();
     let moves = moves.lines().filter(|a| a.len() > 0).collect::<Vec<&str>>();
     data.ants = vec![
@@ -195,32 +200,14 @@ fn render(
     let y_offset: f32 = (HEIGHT - OFFSET * 2.0) / (map.borders.top - map.borders.bottom) as f32;
 	// let offset = (HEIGHT - OFFSET * 2.0) / max(map.borders.right - map.borders.left,)
 	let mut edges: HashMap<String, Vec<String>> = HashMap::new();
-    for (i, room) in &map.rooms {
+	for (i, room) in &map.rooms {
 		edges.insert(i.to_string(), Vec::new());
         for neighbour in &room.links {
-			if !edges.contains_key(neighbour) || !edges.get(neighbour).unwrap().contains(i){
+			if (!edges.contains_key(neighbour) || !edges.get(neighbour).unwrap().contains(i)){
 				edges.get_mut(i).unwrap().push(neighbour.to_string());
 				}
 			}
-		let size = if room.room_type == RoomType::Start || room.room_type == RoomType::End {5.0} else if room.on_path {3.0} else {3.0};
-        commands.spawn_bundle(SpriteBundle {
-            sprite: Sprite {
-                color: if room.room_type == RoomType::Start {Color::GREEN} else if room.room_type == RoomType::End {Color::BLACK} else if room.on_path {Color::RED} else {Color::BLUE},
-                custom_size: Some(Vec2::new(size, size)),
-                ..default()
-            },
-			transform: Transform {
-				translation: Vec3::new(
-					OFFSET + x_offset * (room.coordinates.0 - map.borders.left) as f32 - WIDTH / 2.0,
-					OFFSET + y_offset * (room.coordinates.1 - map.borders.bottom) as f32 - HEIGHT / 2.0,
-					0.0
-				),
-				..Default::default()
-			},
-            ..default()
-        }).insert(RoomComponent);
-    }
-
+		}
 	for (room, neighbours) in &edges{
 		for neighbour in neighbours{
 			let first = map.rooms.get(room).unwrap();
@@ -230,7 +217,7 @@ fn render(
 			let angle = atan2(y_offset as f64 * y_dif, x_offset as f64 * x_dif);
 			commands.spawn_bundle(SpriteBundle {
 				sprite: Sprite {
-					color: if  first.on_path &&  second.on_path {Color::RED} else {Color::BLUE},
+					color: Color::DARK_GRAY,
 					custom_size: Some(Vec2::new(hypot(x_dif.abs() * x_offset as f64, y_dif.abs() * y_offset as f64) as f32, 1.0)),
 					..default()
 				},
@@ -246,7 +233,76 @@ fn render(
 				..default()
 			}).insert(Edge);
 		}
-	} 
+	}
+	for (i, room) in &map.rooms {
+		let size = if room.room_type == RoomType::Start || room.room_type == RoomType::End {5.0} else if room.on_path {3.0} else {3.0};
+        commands.spawn_bundle(SpriteBundle {
+            sprite: Sprite {
+                color: if room.room_type == RoomType::Start {Color::WHITE} else if room.room_type == RoomType::End {Color::WHITE} else {Color::DARK_GRAY},
+                custom_size: Some(Vec2::new(size, size)),
+                ..default()
+            },
+			transform: Transform {
+				translation: Vec3::new(
+					OFFSET + x_offset * (room.coordinates.0 - map.borders.left) as f32 - WIDTH / 2.0,
+					OFFSET + y_offset * (room.coordinates.1 - map.borders.bottom) as f32 - HEIGHT / 2.0,
+					0.0
+				),
+				..Default::default()
+			},
+            ..default()
+        }).insert(RoomComponent);
+    }
+	let colors = vec![Color::YELLOW, Color::TOMATO, Color::BLUE, Color::GREEN, Color::MAROON, Color::PINK, Color::PURPLE, Color::DARK_GREEN, Color::AQUAMARINE, Color::RED, Color::OLIVE];
+	for (i, line) in map.paths[1..].iter().enumerate(){
+		let path = line.split_once(": ").unwrap();
+		let path = path.1;
+		let path: Vec<String> = path.split(" ").map(|l|l.to_string()).collect();
+		for (index, room) in path[1..].iter().enumerate(){
+			if index == path.len() - 2{
+				continue ;
+			}
+			let first = map.rooms.get(room).unwrap();
+			let second = map.rooms.get(&path[index]).unwrap();
+			let x_dif = (first.coordinates.0 - second.coordinates.0) as f64;
+			let y_dif = (first.coordinates.1 - second.coordinates.1) as f64;
+			let angle = atan2(y_offset as f64 * y_dif, x_offset as f64 * x_dif);
+			commands.spawn_bundle(SpriteBundle {
+				sprite: Sprite {
+					color:  colors[i % colors.len()],
+					custom_size: Some(Vec2::new(hypot(x_dif.abs() * x_offset as f64, y_dif.abs() * y_offset as f64) as f32, 1.0)),
+					..default()
+				},
+				transform: Transform {
+					translation: Vec3::new(
+						OFFSET + x_offset * (min(first.coordinates.0, second.coordinates.0) as f32 + x_dif.abs() as f32 / 2.0 - map.borders.left as f32) as f32 - WIDTH / 2.0,
+						OFFSET + y_offset * (min(first.coordinates.1, second.coordinates.1) as f32 + y_dif.abs() as f32 / 2.0 - map.borders.bottom as f32) as f32 - HEIGHT / 2.0,
+						0.0
+					),
+					rotation: Quat::from_rotation_z(angle as f32), 
+					..Default::default()
+				},
+				..default()
+			}).insert(Edge);
+			commands.spawn_bundle(SpriteBundle {
+				sprite: Sprite {
+					color: colors[i % colors.len()],
+					custom_size: Some(Vec2::new(5.0, 5.0)),
+					..default()
+				},
+				transform: Transform {
+					translation: Vec3::new(
+						OFFSET + x_offset * (first.coordinates.0 - map.borders.left) as f32 - WIDTH / 2.0,
+						OFFSET + y_offset * (first.coordinates.1 - map.borders.bottom) as f32 - HEIGHT / 2.0,
+						0.0
+					),
+					..Default::default()
+				},
+				..default()
+			}).insert(RoomComponent);
+		}
+		
+	}
 }
 
 fn rotate(mut rooms: Query<&mut Transform, With<RoomComponent>>){

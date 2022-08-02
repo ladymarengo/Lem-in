@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:16:21 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/28 15:10:20 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/08/02 16:56:57 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_paths(t_data *data)
 		ft_printf("Path %d (length %d): ", i, data->paths[i].length);
 		while (tmp)
 		{
-			ft_printf("%d ", tmp->room);
+			ft_printf("%s ", data->rooms[tmp->room].name);
 			tmp = tmp->next;
 		}
 		ft_printf("\n");
