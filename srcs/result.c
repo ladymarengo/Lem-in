@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 11:18:08 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/07/28 15:06:42 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/08/03 15:24:18 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,5 +157,6 @@ bool	print_result(t_data *data, t_input *input)
 		else if (data->print_lines)
 			ft_printf("END\n");
 	}
+	free(ants);
 	return (true);
 }

@@ -5,3 +5,4 @@ libft/*.o
 libft/libft.a
 visualizer/target
 beautymapper/target
+lem-in.dSYM

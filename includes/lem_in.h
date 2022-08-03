@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/28 14:54:08 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/08/03 15:21:37 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,5 +157,7 @@ void	print_paths(t_data *data);
 int		count_turns(t_data *data);
 bool	solve(t_data *data);
 bool	print_result(t_data *data, t_input *input);
+void	cleanup_and_exit(t_input *input, t_data *data, int ret, char *message);
+void	clean_up(t_input *input, t_data *data);
 
 #endif

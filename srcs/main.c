@@ -6,44 +6,13 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/28 15:05:13 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/08/03 15:54:42 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include <sys/stat.h>
 #include <fcntl.h>
-
-void	clean_up(t_input *input, t_data *data)
-{
-	del_structure_array(&(input->rooms));
-	del_structure_array(&(input->links));
-	del_structure_array(&(input->map));
-	if (input->line)
-		free(input->line);
-	if (input->start)
-		free(input->start);
-	if (input->end)
-		free(input->end);
-	ft_bzero(input, sizeof(*input));
-	while (data->number_of_rooms-- > 0)
-		del_room(&data->rooms[data->number_of_rooms]);
-	free(data->rooms);
-	free(data->capacity);
-	del_list(data->shortest_path);
-	del_list(data->bfs.queue);
-	if (data->bfs.visited)
-		free(data->bfs.visited);
-	if (input->fd != 0)
-		close(input->fd);
-}
-
-void	cleanup_and_exit(t_input *input, t_data *data, int ret, char *message)
-{
-	ft_printf("%s", message);
-	clean_up(input, data);
-	exit(ret);
-}
 
 bool	init_input_structure(t_input *input)
 {
@@ -73,6 +42,10 @@ bool	init_data_structure(t_data *data)
 	data->bfs.parents = NULL;
 	data->bfs.path_lengths = NULL;
 	data->bfs.tmp = NULL;
+	data->connections = NULL;
+	data->bfs.new_conn = NULL;
+	data->capacity = NULL;
+	data->bfs.tmp_capacity = NULL;
 	data->number_of_paths = 0;
 	data->print_lines = false;
 	data->print_paths = false;
@@ -128,14 +101,14 @@ int	main(int argc, char **argv)
 		cleanup_and_exit(&input, &data, -1, "Malloc error");
 	if (argc != 1)
 		handle_args(&data, &input, argv, argc);
-	if (!read_input(&input) || !make_rooms(&input, &data))
+	if (!read_input(&input)) //|| !make_rooms(&input, &data))
 		cleanup_and_exit(&input, &data, -1, "ERROR\n");
 	else
 	{
 		data.ants = (int) input.ants;
-		solve(&data);
+		//solve(&data);
 		//print_connections(&data);
-		print_result(&data, &input);
+		//print_result(&data, &input);
 	}
 	clean_up(&input, &data);
 	return (0);
