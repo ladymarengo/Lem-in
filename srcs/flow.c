@@ -66,8 +66,14 @@ bool	init_bfs(t_data *data)
 	int	i;
 
 	i = 0;
-	data->bfs.visited = (bool *)malloc(sizeof(bool) * data->number_of_rooms);
-	data->bfs.parents = (int *)malloc(sizeof(int) * data->number_of_rooms);
+	if (!data->bfs.visited)
+		data->bfs.visited = (bool *)malloc(sizeof(bool) * data->number_of_rooms);
+	else
+		ft_bzero(data->bfs.visited, sizeof(bool) * data->number_of_rooms);
+	if (!data->bfs.parents)
+		data->bfs.parents = (int *)malloc(sizeof(int) * data->number_of_rooms);
+	else
+		ft_bzero(data->bfs.parents, sizeof(int) * data->number_of_rooms);
 	del_list(data->bfs.queue);
 	data->bfs.queue = NULL;
 	if (!data->bfs.visited || !add_to_end(&data->bfs.queue, data->start))

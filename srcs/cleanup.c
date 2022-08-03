@@ -37,8 +37,10 @@ void clean_up(t_input *input, t_data *data)
 	if (input->end)
 		free(input->end);
 	// ft_bzero(input, sizeof(*input));
-	while (data->number_of_rooms-- > 0)
-		del_room(&data->rooms[data->number_of_rooms]);
+	int i;
+	i = 0;
+	while (i < data->number_of_rooms)
+		del_room(&data->rooms[i++]);
 	free(data->rooms);
 	free(data->capacity);
 	free(data->bfs.tmp_capacity);

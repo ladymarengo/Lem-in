@@ -101,14 +101,14 @@ int	main(int argc, char **argv)
 		cleanup_and_exit(&input, &data, -1, "Malloc error");
 	if (argc != 1)
 		handle_args(&data, &input, argv, argc);
-	if (!read_input(&input)) //|| !make_rooms(&input, &data))
+	if (!read_input(&input) || !make_rooms(&input, &data))
 		cleanup_and_exit(&input, &data, -1, "ERROR\n");
 	else
 	{
 		data.ants = (int) input.ants;
-		//solve(&data);
+		solve(&data);
 		//print_connections(&data);
-		//print_result(&data, &input);
+		print_result(&data, &input);
 	}
 	clean_up(&input, &data);
 	return (0);

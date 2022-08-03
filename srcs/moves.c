@@ -50,6 +50,8 @@ bool	save_paths_lengths(t_data *data, int number_of_paths)
 	int		path;
 	t_list	*links;
 
+	if (data->bfs.path_lengths)
+		free(data->bfs.path_lengths);
 	data->bfs.path_lengths = (int *)malloc(sizeof(int) * number_of_paths);
 	if (!data->bfs.path_lengths)
 		return (false);
@@ -139,5 +141,6 @@ int	count_turns(t_data *data)
 			moves = data->bfs.path_lengths[i] + ants[i] - 1;
 	}
 	// ft_printf("Moves: %d\n", moves);
+	free(ants);
 	return (moves);
 }

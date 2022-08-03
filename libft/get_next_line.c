@@ -32,7 +32,7 @@ int	save_buffer(char **saved, char *buffer)
 {
 	char	*temp;
 
-	if (!(*saved) || ft_strlen(*saved) == 0)
+	if (!(*saved))
 	{
 		*saved = ft_strdup(buffer);
 		if (!(*saved))
