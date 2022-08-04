@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moves.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 14:13:46 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/28 14:10:24 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/08/04 13:51:28 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,6 @@ int	count_paths(t_data *data)
 	return (paths);
 }
 
-static int	lengths_sum(int *paths, int current)
-{
-	int	sum;
-	int	i;
-
-	i = 0;
-	sum = 0;
-	while (i < current)
-	{
-		sum += paths[current] - paths[i];
-		i++;
-	}
-	return (sum);
-}
-
 bool	save_paths_lengths(t_data *data, int number_of_paths)
 {
 	int		length;
@@ -50,11 +35,6 @@ bool	save_paths_lengths(t_data *data, int number_of_paths)
 	int		path;
 	t_list	*links;
 
-	if (data->bfs.path_lengths)
-		free(data->bfs.path_lengths);
-	data->bfs.path_lengths = (int *)malloc(sizeof(int) * number_of_paths);
-	if (!data->bfs.path_lengths)
-		return (false);
 	tmp = data->rooms[data->start].links;
 	while (tmp)
 	{
@@ -62,7 +42,6 @@ bool	save_paths_lengths(t_data *data, int number_of_paths)
 		{
 			length = 1;
 			path = tmp->room;
-			number_of_paths--;
 			while (path != data->end)
 			{
 				links = data->rooms[path].links;
@@ -71,7 +50,7 @@ bool	save_paths_lengths(t_data *data, int number_of_paths)
 				length++;
 				path = links->room;
 			}
-			data->bfs.path_lengths[number_of_paths] = length;
+			data->bfs.path_lengths[--number_of_paths] = length;
 		}
 		tmp = tmp->next;
 	}
@@ -104,43 +83,60 @@ void	sort_paths_lengths(t_data *data, int number_of_paths)
 	}
 }
 
-int	count_turns(t_data *data)
+static bool	add_ants_on_path(t_data *data, int ant, int path, int sum)
 {
-	int	paths;
-	int	ant;
-	int	path;
-	int	*ants;
-	int	moves;
+	int	i;
 
-	paths = count_paths(data);
-	data->bfs.number_of_paths = paths;
-	save_paths_lengths(data, paths);
-	sort_paths_lengths(data, paths);
-	ants = (int *)malloc(sizeof(int) * paths);
-	ft_bzero(ants, sizeof(int) * paths);
 	ant = 0;
+	data->bfs.ant = (int *)ft_memalloc(sizeof(int) * data->bfs.number_of_paths);
+	if (!data->bfs.ant)
+		return (false);
 	while (ant < data->ants)
 	{
 		path = 0;
-		while (path < paths)
+		while (path < data->bfs.number_of_paths)
 		{
-			if (data->ants - ant > lengths_sum(data->bfs.path_lengths, path))
+			i = 0;
+			sum = 0;
+			while (i < path)
+				sum += data->bfs.path_lengths[path] \
+					- data->bfs.path_lengths[i++];
+			if (data->ants - ant > sum)
 			{
-				ants[path]++;
+				data->bfs.ant[path]++;
 				ant++;
 			}
 			path++;
 		}
 	}
-	// for (int i = 0; i < paths; i++)
-	// 	ft_printf("\nPath %d length %d ants %d\n", i, data->bfs.path_lengths[i], ants[i]);
+	return (true);
+}
+
+int	count_turns(t_data *data)
+{
+	int	i;
+	int	moves;
+
+	data->bfs.number_of_paths = count_paths(data);
+	if (data->bfs.path_lengths)
+		free(data->bfs.path_lengths);
+	data->bfs.path_lengths = (int *)malloc(sizeof(int) \
+		* data->bfs.number_of_paths);
+	if (!data->bfs.path_lengths)
+		return (false);
+	save_paths_lengths(data, data->bfs.number_of_paths);
+	sort_paths_lengths(data, data->bfs.number_of_paths);
+	if (!add_ants_on_path(data, 0, 0, 0))
+		return (-1);
 	moves = 0;
-	for (int i = 0; i < paths; i++)
+	i = 0;
+	while (i < data->bfs.number_of_paths)
 	{
-		if (moves < data->bfs.path_lengths[i] + ants[i] - 1)
-			moves = data->bfs.path_lengths[i] + ants[i] - 1;
+		if (moves < data->bfs.path_lengths[i] + data->bfs.ant[i] - 1)
+			moves = data->bfs.path_lengths[i] + data->bfs.ant[i] - 1;
+		i++;
 	}
-	// ft_printf("Moves: %d\n", moves);
-	free(ants);
+	free(data->bfs.ant);
+	data->bfs.ant = NULL;
 	return (moves);
 }

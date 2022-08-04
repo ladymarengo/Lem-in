@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/08/03 15:21:37 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/08/04 13:57:28 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_bfs
 	t_connection	**new_conn;
 	int				*tmp_capacity;
 	int				*path_lengths;
+	int				*ant;
 	int				number_of_paths;
 	t_list			*tmp;
 	int				link;
@@ -122,42 +123,48 @@ typedef struct s_data
 	t_bfs			bfs;
 	t_list			*shortest_path;
 	t_path			*paths;
+	t_list			**ants_on_path;
 	int				number_of_paths;
 	bool			print_lines;
 	bool			print_paths;
 }	t_data;
 
-void	print_connections(t_data *data);
-bool	sort_array(char **arr, int size);
-bool	del_structure_array(t_array *array);
-void	del_array(char **array, size_t size);
-bool	realloc_array(t_array *array);
-bool	init_struct_array(t_array *new);
-bool	add_element(t_array *array, char *element);
-void	print_elements(t_array *array);
-bool	check_ants(char *line, long int *ants);
-bool	check_input(t_input *input);
-bool	post_input_check(t_input *input);
-bool	no_dups(t_array *rooms);
-bool	handle_commands(t_input_flags *flags, char *line);
-void	parse_start_end(t_input *input, t_data *data);
-bool	make_rooms(t_input *input, t_data *data);
-int		binary_search(char **array, char *str, int start, int end);
-bool	parse_links(t_input *input, t_data *data);
-bool	add_to_start(t_list **a, int index);
-bool	add_to_end(t_list **a, int index);
-bool	find_node(t_list *list, int number);
-bool	print_list(t_list *list);
-void	del_list(t_list *list);
-void	del_room(t_room *room);
-int		pop_first_node(t_list **a);
-void	print_rooms_links(t_data *data);
-void	del_elem(t_list **list, int elem);
-void	print_paths(t_data *data);
-int		count_turns(t_data *data);
-bool	solve(t_data *data);
-bool	print_result(t_data *data, t_input *input);
-void	cleanup_and_exit(t_input *input, t_data *data, int ret, char *message);
-void	clean_up(t_input *input, t_data *data);
+void		print_connections(t_data *data);
+bool		sort_array(char **arr, int size);
+bool		del_structure_array(t_array *array);
+void		del_array(char **array, size_t size);
+bool		realloc_array(t_array *array);
+bool		init_struct_array(t_array *new);
+bool		add_element(t_array *array, char *element);
+void		print_elements(t_array *array);
+bool		check_ants(char *line, long int *ants);
+bool		no_dups(t_array *rooms);
+bool		handle_commands(t_input_flags *flags, char *line);
+void		parse_start_end(t_input *input, t_data *data);
+bool		make_rooms(t_input *input, t_data *data);
+int			binary_search(char **array, char *str, int start, int end);
+bool		parse_links(t_input *input, t_data *data);
+bool		add_to_start(t_list **a, int index);
+bool		add_to_end(t_list **a, int index);
+bool		find_node(t_list *list, int number);
+bool		print_list(t_list *list);
+void		del_list(t_list *list);
+void		del_room(t_room *room);
+int			pop_first_node(t_list **a);
+void		print_rooms_links(t_data *data);
+void		del_elem(t_list **list, int elem);
+void		print_paths(t_data *data);
+int			count_turns(t_data *data);
+bool		solve(t_data *data);
+bool		print_result(t_data *data, t_input *input);
+void		cleanup_and_exit(t_input *input, t_data *data, int ret, char *msg);
+void		clean_up(t_input *input, t_data *data);
+bool		read_input(t_input *input);
+bool		is_link(char *line);
+bool		is_room_valid(char *line);
+void		handle_start_end(t_input *input);
+bool		save_paths(t_data *data);
+t_return	bfs(t_data *data);
+bool		init_bfs(t_data *data);
 
 #endif

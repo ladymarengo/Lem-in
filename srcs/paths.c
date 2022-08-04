@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   result.c                                           :+:      :+:    :+:   */
+/*   paths.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 11:18:08 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/08/03 15:24:18 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/08/04 13:08:49 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	sort_paths(t_data *data)
 {
 	int		path;
 	int		second;
-	t_path 	tmp;
+	t_path	tmp;
 
 	path = 0;
 	while (path < data->number_of_paths - 1)
@@ -39,7 +39,7 @@ void	sort_paths(t_data *data)
 bool	save_path(t_data *data, int room, int i)
 {
 	t_list	*tmp;
-	
+
 	data->paths[i].path = NULL;
 	data->paths[i].ants = 0;
 	data->paths[i].length = 1;
@@ -56,7 +56,6 @@ bool	save_path(t_data *data, int room, int i)
 				room = tmp->room;
 			tmp = tmp->next;
 		}
-		//room = tmp->room;
 		data->paths[i].length++;
 	}
 	if (!add_to_end(&(data->paths[i].path), room))
@@ -68,7 +67,7 @@ bool	save_paths(t_data *data)
 {
 	t_list	*tmp;
 	int		i;
-	
+
 	data->paths = (t_path *)malloc(sizeof(t_path) * data->number_of_paths);
 	if (!data->paths)
 		return (false);
@@ -78,85 +77,31 @@ bool	save_paths(t_data *data)
 	{
 		if (data->connections[data->start][tmp->room] == FLOW
 			&& !save_path(data, tmp->room, i++))
-			return (false);	
+			return (false);
 		tmp = tmp->next;
 	}
+	sort_paths(data);
 	return (true);
 }
 
-static int	lengths_sum(t_data *data, int current)
+void	print_paths(t_data *data)
 {
-	int	sum;
-	int	i;
+	t_list	*tmp;
+	int		i;
 
 	i = 0;
-	sum = 0;
-	while (i < current)
+	ft_printf("Printing paths\n");
+	while (i < data->number_of_paths)
 	{
-		sum += data->paths[current].length - data->paths[i].length;
+		tmp = data->paths[i].path;
+		ft_printf("Path %d (length %d): ", i, data->paths[i].length);
+		while (tmp)
+		{
+			ft_printf("%s ", data->rooms[tmp->room].name);
+			tmp = tmp->next;
+		}
+		ft_printf("\n");
 		i++;
 	}
-	return (sum);
-}
-
-bool	print_result(t_data *data, t_input *input)
-{
-	t_list	**ants;
-	int		nb_of_ants;
-	bool	moving;
-	int		path;
-	int		i;
-	int		line_number;
-	
-	if (data->number_of_paths == 0)
-		return (false);
-	save_paths(data);
-	sort_paths(data);
-	ants = (t_list **)malloc(sizeof(t_list *) * data->ants);
-	if (!ants)
-		return (false);
-	print_elements(&(input->map));
-	if (data->print_paths)
-		print_paths(data);
-	nb_of_ants = 0;
-	moving = true;
-	line_number = 1;
-	while (moving)
-	{
-		path = 0;
-		while (path < data->number_of_paths)
-		{
-			if (data->ants - nb_of_ants > lengths_sum(data, path))
-			{
-				ants[nb_of_ants] = data->paths[path].path;
-				nb_of_ants++;
-			}
-			path++;
-		}
-		i = 0;
-		moving = false;
-		if (data->print_lines)
-			ft_printf("%3d: ", line_number++);
-		while (i < nb_of_ants)
-		{
-			if (ants[i])
-			{
-				ants[i] = ants[i]->next;
-				if (ants[i])
-				{
-					if (moving)
-						ft_printf(" ");
-					ft_printf("L%d-%s", i + 1, data->rooms[ants[i]->room].name);
-					moving = true;
-				}
-			}
-			i++;
-		}
-		if (moving)
-			ft_printf("\n");
-		else if (data->print_lines)
-			ft_printf("END\n");
-	}
-	free(ants);
-	return (true);
+	ft_putendl("");
 }

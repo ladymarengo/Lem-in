@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:43 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/26 17:55:44 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/08/04 12:36:28 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,44 +24,6 @@ bool	find_node(t_list *list, int number)
 		list = tmp;
 	}
 	return (false);
-}
-
-void	del_list(t_list *list)
-{
-	t_list	*tmp;
-
-	while (list)
-	{
-		tmp = list->next;
-		free(list);
-		list = tmp;
-	}
-}
-
-void	del_elem(t_list **list, int elem)
-{
-	t_list	*tmp;
-	t_list	*delete;
-
-	if ((*list)->room == elem)
-	{
-		tmp = (*list)->next;
-		free(*list);
-		*list = tmp;
-		return ;
-	}
-	tmp = *list;
-	while (tmp->next)
-	{
-		if (tmp->next->room == elem)
-		{
-			delete = tmp->next;
-			tmp->next = tmp->next->next;
-			free(delete);
-			return ;
-		}
-		tmp = tmp->next;
-	}
 }
 
 t_list	*new_node(int index)
@@ -101,7 +63,11 @@ bool	add_to_end(t_list **a, int index)
 	if (!a)
 		return (false);
 	if (!*a)
+	{
 		(*a) = new_node(index);
+		if (!(*a))
+			return (false);
+	}
 	else
 	{
 		list = *a;
@@ -112,7 +78,6 @@ bool	add_to_end(t_list **a, int index)
 			return (false);
 		list->next = tmp;
 	}
-	// all malloc protection
 	return (true);
 }
 
