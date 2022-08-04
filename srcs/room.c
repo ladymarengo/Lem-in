@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 15:52:05 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/26 17:44:41 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/08/04 15:22:59 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ bool	make_rooms(t_input *input, t_data *data)
 	}
 	if (!parse_links(input, data))
 		return (false);
+	data->ants = (int) input->ants;
 	return (true);
 }

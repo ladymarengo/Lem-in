@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:24:00 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/08/04 13:51:45 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/08/04 15:24:17 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,9 @@ int	main(int argc, char **argv)
 		cleanup_and_exit(&input, &data, -1, "Malloc error");
 	if (argc != 1)
 		handle_args(&data, &input, argv, argc);
-	if (!read_input(&input) || !make_rooms(&input, &data))
+	if (!read_input(&input) || !make_rooms(&input, &data) || !solve(&data) \
+		|| !print_result(&data, &input))
 		cleanup_and_exit(&input, &data, -1, "ERROR\n");
-	else
-	{
-		data.ants = (int) input.ants;
-		solve(&data);
-		print_result(&data, &input);
-	}
 	cleanup_and_exit(&input, &data, 0, NULL);
 	return (0);
 }
