@@ -112,8 +112,8 @@ bool	solve(t_data *data)
 			update_connections(data);
 			if (better_moves(data))
 				copy_connection_and_capacity(data);
-			else
-				return (true);
+			// else
+			// 	return (true);
 		}
 	}
 	return (false);
