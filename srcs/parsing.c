@@ -65,6 +65,7 @@ void	parse_start_end(t_input *input, t_data *data)
 		if (ft_strncmp(input->rooms.array[i], input->end, \
 			ft_strlen(input->rooms.array[i])) == 0)
 		{
+			// BUG!!!! Need to fix!! "1 1 1" returns true when compared with "12"
 			data->end = i;
 			break ;
 		}
