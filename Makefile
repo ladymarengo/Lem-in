@@ -17,7 +17,7 @@ INCL = -Iincludes/ -I$(LIB_DIR)/includes
 
 SRCS =	main.c char_array_manipulation.c parsing.c validation.c printing.c \
 sorting.c check_duplicates.c room.c search.c links_parsing.c linked_list.c \
-flow.c paths.c moves.c cleanup.c input.c bfs.c
+flow.c paths.c moves.c cleanup.c input.c bfs.c queue.c
 
 OBJ_NAME = $(SRCS:.c=.o)
 

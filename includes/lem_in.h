@@ -81,9 +81,16 @@ typedef enum e_connection
 	FLOW,
 }	t_connection;
 
+typedef struct s_bfs_path
+{
+	struct s_bfs_path *next;
+	t_list *path;
+} t_bfs_path;
+
 typedef struct s_bfs
 {
-	t_list			*queue;
+	t_bfs_path		*queue_path;
+	t_list			*current_path;
 	bool			*visited;
 	int				*parents;
 	int				current;
@@ -166,5 +173,9 @@ void		handle_start_end(t_input *input);
 bool		save_paths(t_data *data);
 t_return	bfs(t_data *data);
 bool		init_bfs(t_data *data);
+t_list		*pop_first_node_path(t_bfs_path **a);
+bool		add_to_end_path(t_bfs_path **a, t_list *path, int index);
+t_bfs_path	*new_node_path(t_list *path, int index);
+
 
 #endif

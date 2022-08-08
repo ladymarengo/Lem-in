@@ -53,12 +53,22 @@ void	cleanup_input(t_input *input)
 
 void	cleanup_data(t_data *data)
 {
+	t_bfs_path	*path;
+
 	free(data->capacity);
 	free(data->bfs.tmp_capacity);
 	free(data->bfs.path_lengths);
 	del_list(data->bfs.tmp);
 	del_list(data->shortest_path);
-	del_list(data->bfs.queue);
+	while (data->bfs.queue_path)
+	{
+		path = data->bfs.queue_path;
+		data->bfs.queue_path = data->bfs.queue_path->next;
+		del_list(path->path);
+		free(path);
+	}
+	if (data->bfs.current_path)
+		del_list(data->bfs.current_path);
 	if (data->paths)
 	{
 		while (data->number_of_paths-- > 0
@@ -68,8 +78,6 @@ void	cleanup_data(t_data *data)
 	}
 	if (data->bfs.visited)
 		free(data->bfs.visited);
-	if (data->bfs.parents)
-		free(data->bfs.parents);
 	if (data->ants_on_path)
 		free(data->ants_on_path);
 	delete_connections(data->connections, data->number_of_rooms);

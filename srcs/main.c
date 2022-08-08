@@ -37,9 +37,9 @@ bool	init_data_structure(t_data *data)
 	data->rooms = NULL;
 	data->shortest_path = NULL;
 	data->paths = NULL;
-	data->bfs.queue = NULL;
+	data->bfs.queue_path = NULL;
+	data->bfs.current_path = NULL;
 	data->bfs.visited = NULL;
-	data->bfs.parents = NULL;
 	data->bfs.path_lengths = NULL;
 	data->bfs.tmp = NULL;
 	data->bfs.ant = NULL;

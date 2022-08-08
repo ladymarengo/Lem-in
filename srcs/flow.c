@@ -77,18 +77,21 @@ bool	better_moves(t_data *data)
 void	update_connections(t_data *data)
 {
 	int	room;
+	t_list	*path;
 
-	room = data->end;
+	path = data->bfs.current_path;
+	room = path->room;
 	while (room != data->start)
 	{
-		if (data->bfs.new_conn[room][data->bfs.parents[room]] == FLOW)
-			data->bfs.new_conn[room][data->bfs.parents[room]] = NO_FLOW;
+		if (data->bfs.new_conn[room][path->next->room] == FLOW)
+			data->bfs.new_conn[room][path->next->room] = NO_FLOW;
 		else
 		{
-			data->bfs.new_conn[data->bfs.parents[room]][room] = FLOW;
+			data->bfs.new_conn[path->next->room][room] = FLOW;
 			data->bfs.tmp_capacity[room]++;
 		}
-		room = data->bfs.parents[room];
+		path = path->next;
+		room = path->room;
 	}
 }
 
@@ -112,8 +115,6 @@ bool	solve(t_data *data)
 			update_connections(data);
 			if (better_moves(data))
 				copy_connection_and_capacity(data);
-			// else
-			// 	return (true);
 		}
 	}
 	return (false);
