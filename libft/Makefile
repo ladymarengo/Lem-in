@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/08 14:28:06 by nsamoilo          #+#    #+#              #
-#    Updated: 2022/06/14 16:10:37 by nsamoilo         ###   ########.fr        #
+#    Updated: 2022/08/09 15:25:44 by jheiskan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ FT_PRINTF_OBJECTS = $(patsubst %, %.o, $(FT_PRINTF_FUNCTIONS))
 all: $(NAME)
 
 $(NAME):
-	gcc -Wall -Wextra -Werror -c $(FILES) $(FT_PRINTF_FILES)
+	gcc -Wall -Wextra -Werror -O3 -c $(FILES) $(FT_PRINTF_FILES)
 	ar rc $(NAME) $(OBJECTS) $(FT_PRINTF_OBJECTS)
 	ranlib $(NAME)
 
