@@ -4,7 +4,7 @@ Red='\033[0;31m'          # Red
 Green='\033[0;32m'        # Green
 NC='\033[0m'              # No Color
 Yellow='\033[0;33m'       # Yellow
-for value in {1..10} 
+for value in {1..10}
 do
     ./generator $1 > tmp
     ./lem-in -file tmp | grep "^L" > grep_tmp
@@ -22,3 +22,4 @@ do
 		echo -e "${Red}KO${NC}"
 	fi
 done
+rm -rf tmp grep_tmp
