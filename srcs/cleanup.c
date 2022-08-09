@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 15:07:49 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/08/09 13:16:57 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/08/09 16:26:07 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	cleanup_data(t_data *data)
 		free(data->ants_on_path);
 	delete_connections(data->connections, data->number_of_rooms);
 	while (data->number_of_rooms-- > 0)
-		del_room(&data->rooms[data->number_of_rooms]);
+		del_list(data->rooms[data->number_of_rooms].links);
 	free(data->rooms);
 }
 

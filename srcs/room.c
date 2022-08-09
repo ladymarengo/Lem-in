@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   room.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 15:52:05 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/08/04 15:22:59 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/08/09 16:25:48 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-void	del_room(t_room *room)
-{
-	del_list(room->links);
-	del_list(room->input);
-	del_list(room->output);
-}
 
 bool	init_rooms(t_input *input, t_data *data)
 {
@@ -48,14 +41,7 @@ bool	init_rooms(t_input *input, t_data *data)
 void	init_room(t_input *input, t_data *data, int i)
 {
 	data->rooms[i].name = input->rooms.array[i];
-	if (i == data->start)
-		data->rooms[i].start = true;
-	if (i == data->end)
-		data->rooms[i].end = true;
 	data->rooms[i].links = NULL;
-	data->rooms[i].input = NULL;
-	data->rooms[i].output = NULL;
-	data->rooms[i].bfs_level = -1;
 }
 
 bool	make_rooms(t_input *input, t_data *data)

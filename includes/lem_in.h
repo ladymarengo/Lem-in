@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/08/09 13:10:24 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/08/09 16:26:19 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,7 @@ typedef struct s_list
 typedef struct s_room
 {
 	char	*name;
-	bool	start;
-	bool	end;
 	t_list	*links;
-	t_list	*input;
-	t_list	*output;
-	int		bfs_level;
 }	t_room;
 
 typedef struct s_room_array
@@ -155,7 +150,6 @@ bool		add_to_end(t_list **a, int index);
 bool		find_node(t_list *list, int number);
 bool		print_list(t_list *list);
 void		del_list(t_list *list);
-void		del_room(t_room *room);
 int			pop_first_node(t_list **a);
 void		print_rooms_links(t_data *data);
 void		del_elem(t_list **list, int elem);
