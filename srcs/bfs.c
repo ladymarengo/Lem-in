@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 13:54:57 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/08/04 13:55:32 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/08/09 13:26:17 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ bool	init_bfs(t_data *data)
 	}
 	del_list(data->bfs.current_path);
 	data->bfs.queue_path = NULL;
-	if (!data->bfs.visited || !add_to_end_path(&(data->bfs.queue_path), NULL, data->start))
+	if (!data->bfs.visited || !add_to_end_path(&(data->bfs.queue_path), NULL, \
+			data->start))
 		return (false);
 	while (i < data->number_of_rooms)
 		data->bfs.visited[i++] = false;
@@ -42,7 +43,8 @@ bool	init_bfs(t_data *data)
 
 bool	valid_path(t_data *data)
 {
-	if ((data->bfs.visited[data->bfs.link] && data->bfs.new_conn[data->bfs.link][data->bfs.current] == NO_FLOW)
+	if ((data->bfs.visited[data->bfs.link] \
+			&& data->bfs.new_conn[data->bfs.link][data->bfs.current] == NO_FLOW)
 		|| data->bfs.new_conn[data->bfs.current][data->bfs.link] == FLOW)
 		return (false);
 	if (data->bfs.tmp_capacity[data->bfs.current] > 0
@@ -68,12 +70,14 @@ t_return	bfs(t_data *data)
 			if (valid_path(data))
 			{
 				data->bfs.visited[data->bfs.link] = true;
-				if (!add_to_end_path(&data->bfs.queue_path, data->bfs.current_path, data->bfs.link))
+				if (!add_to_end_path(&data->bfs.queue_path, \
+					data->bfs.current_path, data->bfs.link))
 					return (FAIL);
 			}
 			data->bfs.tmp = data->bfs.tmp->next;
 		}
 		del_list(data->bfs.current_path);
+		data->bfs.current_path = NULL;
 	}
 	return (NO_PATH);
 }

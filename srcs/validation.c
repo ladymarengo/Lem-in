@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:38:07 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/08/04 12:25:21 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/08/09 13:20:08 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,26 @@ bool	is_link(char *line)
 
 void	handle_start_end(t_input *input)
 {
+	char	*tmp;
+
 	if (input->flags.next_s)
+	{
 		input->start = ft_strdup(input->rooms.array \
 		[input->rooms.nb_of_elements - 1]);
+		tmp = input->start;
+		while (*tmp != ' ')
+			tmp++;
+		*tmp = '\0';
+	}
 	else if (input->flags.next_e)
+	{
 		input->end = ft_strdup(input->rooms.array \
 		[input->rooms.nb_of_elements - 1]);
+		tmp = input->end;
+		while (*tmp != ' ')
+			tmp++;
+		*tmp = '\0';
+	}
 	input->flags.next_s = false;
 	input->flags.next_e = false;
 }

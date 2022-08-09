@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:40:49 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/06/21 16:35:31 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/08/09 13:24:38 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ void	parse_start_end(t_input *input, t_data *data)
 	i = 0;
 	while (i < input->rooms.nb_of_elements)
 	{
-		if (ft_strncmp(input->rooms.array[i], input->start, \
-			ft_strlen(input->rooms.array[i])) == 0)
+		if (ft_strcmp(input->rooms.array[i], input->start) == 0)
 		{
 			data->start = i;
 			break ;
@@ -62,10 +61,8 @@ void	parse_start_end(t_input *input, t_data *data)
 	i = 0;
 	while (i < input->rooms.nb_of_elements)
 	{
-		if (ft_strncmp(input->rooms.array[i], input->end, \
-			ft_strlen(input->rooms.array[i])) == 0)
+		if (ft_strcmp(input->rooms.array[i], input->end) == 0)
 		{
-			// BUG!!!! Need to fix!! "1 1 1" returns true when compared with "12"
 			data->end = i;
 			break ;
 		}

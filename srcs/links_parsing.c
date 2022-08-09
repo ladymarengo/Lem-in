@@ -6,11 +6,25 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:20:33 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/07/26 13:01:33 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/08/09 13:16:36 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+bool	find_node(t_list *list, int number)
+{
+	t_list	*tmp;
+
+	while (list)
+	{
+		if (list->room == number)
+			return (true);
+		tmp = list->next;
+		list = tmp;
+	}
+	return (false);
+}
 
 bool	parse_link(t_data *data, t_array *rooms, char *link)
 {

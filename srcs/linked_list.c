@@ -6,24 +6,22 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:43 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/08/04 12:36:28 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/08/09 13:17:04 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-bool	find_node(t_list *list, int number)
+void	del_list(t_list *list)
 {
 	t_list	*tmp;
 
 	while (list)
 	{
-		if (list->room == number)
-			return (true);
 		tmp = list->next;
+		free(list);
 		list = tmp;
 	}
-	return (false);
 }
 
 t_list	*new_node(int index)

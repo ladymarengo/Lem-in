@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/08/04 13:57:28 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/08/09 13:10:24 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,15 @@ typedef enum e_connection
 
 typedef struct s_bfs_path
 {
-	struct s_bfs_path *next;
-	t_list *path;
-} t_bfs_path;
+	struct s_bfs_path	*next;
+	t_list				*path;
+}	t_bfs_path;
 
 typedef struct s_bfs
 {
 	t_bfs_path		*queue_path;
 	t_list			*current_path;
 	bool			*visited;
-	int				*parents;
 	int				current;
 	t_connection	**new_conn;
 	int				*tmp_capacity;
@@ -176,6 +175,5 @@ bool		init_bfs(t_data *data);
 t_list		*pop_first_node_path(t_bfs_path **a);
 bool		add_to_end_path(t_bfs_path **a, t_list *path, int index);
 t_bfs_path	*new_node_path(t_list *path, int index);
-
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flow.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 12:08:19 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/08/04 15:22:35 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/08/09 12:01:06 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ bool	better_moves(t_data *data)
 
 void	update_connections(t_data *data)
 {
-	int	room;
+	int		room;
 	t_list	*path;
 
 	path = data->bfs.current_path;
