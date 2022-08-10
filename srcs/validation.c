@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:38:07 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/08/09 13:20:08 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/08/10 12:04:07 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,15 @@ bool	is_link(char *line)
 	return (true);
 }
 
-void	handle_start_end(t_input *input)
+bool	handle_start_end(t_input *input, int element)
 {
 	char	*tmp;
 
 	if (input->flags.next_s)
 	{
-		input->start = ft_strdup(input->rooms.array \
-		[input->rooms.nb_of_elements - 1]);
+		input->start = ft_strdup(input->rooms.array[element]);
+		if (!input->start)
+			return (false);
 		tmp = input->start;
 		while (*tmp != ' ')
 			tmp++;
@@ -83,8 +84,9 @@ void	handle_start_end(t_input *input)
 	}
 	else if (input->flags.next_e)
 	{
-		input->end = ft_strdup(input->rooms.array \
-		[input->rooms.nb_of_elements - 1]);
+		input->end = ft_strdup(input->rooms.array[element]);
+		if (!input->end)
+			return (false);
 		tmp = input->end;
 		while (*tmp != ' ')
 			tmp++;
@@ -92,4 +94,5 @@ void	handle_start_end(t_input *input)
 	}
 	input->flags.next_s = false;
 	input->flags.next_e = false;
+	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 14:11:17 by nsamoilo          #+#    #+#             */
-/*   Updated: 2022/08/09 16:26:19 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/08/10 12:06:26 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ void		clean_up(t_input *input, t_data *data);
 bool		read_input(t_input *input);
 bool		is_link(char *line);
 bool		is_room_valid(char *line);
-void		handle_start_end(t_input *input);
+bool		handle_start_end(t_input *input, int element);
 bool		save_paths(t_data *data);
 t_return	bfs(t_data *data);
 bool		init_bfs(t_data *data);

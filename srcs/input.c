@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:24:49 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/08/04 12:25:55 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/08/10 12:04:33 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ bool	check_input(t_input *inp)
 		}
 		else if (!inp->flags.parsing_links && is_room_valid(inp->line))
 		{
-			if (!add_element(&(inp->rooms), inp->line))
+			if (!add_element(&(inp->rooms), inp->line) \
+				|| !handle_start_end(inp, inp->rooms.nb_of_elements - 1))
 				return (false);
-			handle_start_end(inp);
 		}
 		else if (is_link(inp->line) && !inp->flags.next_s && !inp->flags.next_e)
 		{
