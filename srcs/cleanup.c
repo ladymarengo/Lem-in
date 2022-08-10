@@ -6,7 +6,7 @@
 /*   By: jheiskan <jheiskan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 15:07:49 by jheiskan          #+#    #+#             */
-/*   Updated: 2022/08/09 16:26:07 by jheiskan         ###   ########.fr       */
+/*   Updated: 2022/08/10 12:48:55 by jheiskan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ void	cleanup_and_exit(t_input *input, t_data *data, int ret, char *message)
 		ft_printf("%s", message);
 	cleanup_data(data);
 	cleanup_input(input);
+	cleanup_bfs(data);
 	exit(ret);
 }
