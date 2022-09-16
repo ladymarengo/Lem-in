@@ -4,7 +4,7 @@ Team project with [jheiskan](https://github.com/jmtuulos) in Hive Helsinki schoo
 
 The main goal of this project is to transfer given number of ants through the complex graph (simulating an ant farm) in the least amount of turns. You can read all requirements [here](https://github.com/ladymarengo/Lem-in/blob/main/Subject.pdf).
 
-For the main part of the solution we used Edmonds–Karp algorithm with our modifications for handling nodes capacity. For more detailed explanations you can check comments in the source files.
+For the main part of the solution we used Edmonds–Karp algorithm with our modifications for handling nodes capacity.
 
 As a bonus we created [Beautymapper](https://github.com/jmtuulos/Lem-in-beautymapper) tool for updating maps coordinates and Visualizer for demonstration (and mostly for fun!). Both tools are written in Rust.
 
